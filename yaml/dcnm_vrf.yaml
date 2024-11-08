@@ -1,0 +1,351 @@
+---
+module: dcnm_vrf
+short_description: Add and remove VRFs from a DCNM managed VXLAN fabric.
+version_added: "0.9.0"
+description:
+    - "Add and remove VRFs and VRF Lite Extension from a DCNM managed VXLAN fabric."
+    - "In Multisite fabrics, VRFs can be created only on Multisite fabric"
+    - "In Multisite fabrics, VRFs cannot be created on member fabric"
+author: Shrishail Kariyappanavar(@nkshrishail), Karthik Babu Harichandra Babu (@kharicha), Praveen Ramoorthy(@praveenramoorthy)
+options:
+  fabric:
+    description:
+    - Name of the target fabric for vrf operations
+    type: str
+    required: yes
+  state:
+    description:
+    - The state of DCNM after module completion.
+    type: str
+    choices:
+      - merged
+      - replaced
+      - overridden
+      - deleted
+      - query
+    default: merged
+  config:
+    description:
+    - List of details of vrfs being managed. Not required for state deleted
+    type: list
+    elements: dict
+    suboptions:
+      vrf_name:
+        description:
+        - Name of the vrf being managed
+        type: str
+        required: true
+      vrf_id:
+        description:
+        - ID of the vrf being managed
+        type: int
+        required: false
+      vlan_id:
+        description:
+        - vlan ID for the vrf attachment
+        - If not specified in the playbook, DCNM will auto-select an available vlan_id
+        type: int
+        required: false
+      vrf_template:
+        description:
+        - Name of the config template to be used
+        type: str
+        default: 'Default_VRF_Universal'
+      vrf_extension_template:
+        description:
+        - Name of the extension config template to be used
+        type: str
+        default: 'Default_VRF_Extension_Universal'
+      service_vrf_template:
+        description:
+        - Service vrf template
+        type: str
+        default: None
+      vrf_vlan_name:
+        description:
+        - VRF Vlan Name
+        - if > 32 chars enable - system vlan long-name
+        type: str
+        required: false
+      vrf_intf_desc:
+        description:
+        - VRF Intf Description
+        type: str
+        required: false
+      vrf_description:
+        description:
+        - VRF Description
+        type: str
+        required: false
+      vrf_int_mtu:
+        description:
+        - VRF interface MTU
+        type: int
+        required: false
+        default: 9216
+      loopback_route_tag:
+        description:
+        - Loopback Routing Tag
+        type: int
+        required: false
+        default: 12345
+      redist_direct_rmap:
+        description:
+        - Redistribute Direct Route Map
+        type: str
+        required: false
+        default: 'FABRIC-RMAP-REDIST-SUBNET'
+      max_bgp_paths:
+        description:
+        - Max BGP Paths
+        type: int
+        required: false
+        default: 1
+      max_ibgp_paths:
+        description:
+        - Max iBGP Paths
+        type: int
+        required: false
+        default: 2
+      ipv6_linklocal_enable:
+        description:
+        - Enable IPv6 link-local Option
+        type: bool
+        required: false
+        default: true
+      trm_enable:
+        description:
+        - Enable Tenant Routed Multicast
+        type: bool
+        required: false
+        default: false
+      no_rp:
+        description:
+        - No RP, only SSM is used
+        - supported on NDFC only
+        type: bool
+        required: false
+        default: false
+      rp_external:
+        description:
+        - Specifies if RP is external to the fabric
+        - Can be configured only when TRM is enabled
+        type: bool
+        required: false
+        default: false
+      rp_address:
+        description:
+        - IPv4 Address of RP
+        - Can be configured only when TRM is enabled
+        type: str
+        required: false
+      rp_loopback_id:
+        description:
+        - loopback ID of RP
+        - Can be configured only when TRM is enabled
+        type: int
+        required: false
+      underlay_mcast_ip:
+        description:
+        - Underlay IPv4 Multicast Address
+        - Can be configured only when TRM is enabled
+        type: str
+        required: false
+      overlay_mcast_group:
+        description:
+        - Underlay IPv4 Multicast group (224.0.0.0/4 to 239.255.255.255/4)
+        - Can be configured only when TRM is enabled
+        type: str
+        required: false
+      trm_bgw_msite:
+        description:
+        - Enable TRM on Border Gateway Multisite
+        - Can be configured only when TRM is enabled
+        type: bool
+        required: false
+        default: false
+      adv_host_routes:
+        description:
+        - Flag to Control Advertisement of /32 and /128 Routes to Edge Routers
+        type: bool
+        required: false
+        default: false
+      adv_default_routes:
+        description:
+        - Flag to Control Advertisement of Default Route Internally
+        type: bool
+        required: false
+        default: true
+      static_default_route:
+        description:
+        - Flag to Control Static Default Route Configuration
+        type: bool
+        required: false
+        default: true
+      bgp_password:
+        description:
+        - VRF Lite BGP neighbor password
+        - Password should be in Hex string format
+        type: str
+        required: false
+      bgp_passwd_encrypt:
+        description:
+        - VRF Lite BGP Key Encryption Type
+        - Allowed values are 3 (3DES) and 7 (Cisco)
+        type: int
+        choices:
+          - 3
+          - 7
+        required: false
+        default: 3
+      netflow_enable:
+        description:
+        - Enable netflow on VRF-LITE Sub-interface
+        - Netflow is supported only if it is enabled on fabric
+        - Netflow configs are supported on NDFC only
+        type: bool
+        required: false
+        default: false
+      nf_monitor:
+        description:
+        - Netflow Monitor
+        - Netflow configs are supported on NDFC only
+        type: str
+        required: false
+      disable_rt_auto:
+        description:
+        - Disable RT Auto-Generate
+        - supported on NDFC only
+        type: bool
+        required: false
+        default: false
+      import_vpn_rt:
+        description:
+        - VPN routes to import
+        - supported on NDFC only
+        - Use ',' to separate multiple route-targets
+        type: str
+        required: false
+      export_vpn_rt:
+        description:
+        - VPN routes to export
+        - supported on NDFC only
+        - Use ',' to separate multiple route-targets
+        type: str
+        required: false
+      import_evpn_rt:
+        description:
+        - EVPN routes to import
+        - supported on NDFC only
+        - Use ',' to separate multiple route-targets
+        type: str
+        required: false
+      export_evpn_rt:
+        description:
+        - EVPN routes to export
+        - supported on NDFC only
+        - Use ',' to separate multiple route-targets
+        type: str
+        required: false
+      import_mvpn_rt:
+        description:
+        - MVPN routes to import
+        - supported on NDFC only
+        - Can be configured only when TRM is enabled
+        - Use ',' to separate multiple route-targets
+        type: str
+        required: false
+      export_mvpn_rt:
+        description:
+        - MVPN routes to export
+        - supported on NDFC only
+        - Can be configured only when TRM is enabled
+        - Use ',' to separate multiple route-targets
+        type: str
+        required: false
+      attach:
+        description:
+        - List of vrf attachment details
+        type: list
+        elements: dict
+        suboptions:
+          ip_address:
+            description:
+            - IP address of the switch where vrf will be attached or detached
+            type: str
+            required: true
+            suboptions:
+              vrf_lite:
+                type: list
+                description:
+                - VRF Lite Extensions options
+                elements: dict
+                required: false
+                suboptions:
+                  peer_vrf:
+                    description:
+                    - VRF Name to which this extension is attached
+                    type: str
+                    required: false
+                  interface:
+                    description:
+                    - Interface of the switch which is connected to the edge router
+                    type: str
+                    required: true
+                  ipv4_addr:
+                    description:
+                    - IP address of the interface which is connected to the edge router
+                    type: str
+                    required: false
+                  neighbor_ipv4:
+                    description:
+                    - Neighbor IP address of the edge router
+                    type: str
+                    required: false
+                  ipv6_addr:
+                    description:
+                    - IPv6 address of the interface which is connected to the edge router
+                    type: str
+                    required: false
+                  neighbor_ipv6:
+                    description:
+                    - Neighbor IPv6 address of the edge router
+                    type: str
+                    required: false
+                  dot1q:
+                    description:
+                    - DOT1Q Id
+                    type: str
+                    required: false
+          import_evpn_rt:
+            description:
+            - import evpn route-target
+            - supported on NDFC only
+            - Use ',' to separate multiple route-targets
+            type: str
+            required: false
+          export_evpn_rt:
+            description:
+            - export evpn route-target
+            - supported on NDFC only
+            - Use ',' to separate multiple route-targets
+            type: str
+            required: false
+          deploy:
+            description:
+            - Per switch knob to control whether to deploy the attachment
+            - This knob has been deprecated from Ansible NDFC Collection Version 2.1.0 onwards.
+              There will not be any functional impact if specified in playbook.
+            type: bool
+            default: true
+      deploy:
+        description:
+        - Global knob to control whether to deploy the attachment
+        - Ansible NDFC Collection Behavior for Version 2.0.1 and earlier
+        - This knob will create and deploy the attachment in DCNM only when set to "True" in playbook
+        - Ansible NDFC Collection Behavior for Version 2.1.0 and later
+        - Attachments specified in the playbook will always be created in DCNM.
+          This knob, when set to "True",  will deploy the attachment in DCNM, by pushing the configs to switch.
+          If set to "False", the attachments will be created in DCNM, but will not be deployed
+        type: bool
+        default: true

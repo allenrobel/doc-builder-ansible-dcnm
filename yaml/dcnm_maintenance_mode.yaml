@@ -1,0 +1,77 @@
+---
+module: dcnm_maintenance_mode
+short_description: Manage Maintenance Mode Configuration of NX-OS Switches.
+version_added: "3.6.0"
+author: Allen Robel (@quantumonion)
+description:
+- Enable Maintenance or Normal Mode.
+options:
+    state:
+        choices:
+        - merged
+        - query
+        default: merged
+        description:
+        - The state of the feature or object after module completion
+        type: str
+    config:
+        description:
+        - A dictionary containing the maintenance mode configuration.
+        type: dict
+        required: true
+        suboptions:
+            deploy:
+                default: false
+                description:
+                - Whether to deploy the switch configurations.
+                required: false
+                type: bool
+            wait_for_mode_change:
+                default: false
+                description:
+                - If deploy is enabled, whether to wait for NDFC to push the change to the switch.  Ignored if deploy is not enabled.
+                required: false
+                type: bool
+            mode:
+                choices:
+                - maintenance
+                - normal
+                default: normal
+                description:
+                - Enable maintenance or normal mode on all switches.
+                required: false
+                type: bool
+            switches:
+                description:
+                - A list of target switches.
+                - Per-switch options override the global options.
+                required: true
+                type: list
+                elements: dict
+                suboptions:
+                    ip_address:
+                        description:
+                        - The IP address of the switch.
+                        required: true
+                        type: str
+                    mode:
+                        choices:
+                        - maintenance
+                        - normal
+                        default: normal
+                        description:
+                        - Enable maintenance or normal mode for the switch.
+                        required: false
+                        type: str
+                    deploy:
+                        default: false
+                        description:
+                        - Whether to deploy the switch configuration.
+                        required: false
+                        type: bool
+                    wait_for_mode_change:
+                        default: false
+                        description:
+                        - If deploy is enabled, whether to wait for NDFC to push the change to the switch. Ignored if deploy is not enabled.
+                        required: false
+                        type: bool

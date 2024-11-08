@@ -1,0 +1,27 @@
+---
+module: dcnm_rest
+short_description: Send REST API requests to DCNM controller.
+version_added: "0.9.0"
+description:
+    - "Send REST API requests to DCNM controller."
+author:
+    Mike Wiebe (@mikewiebe)
+options:
+  method:
+    description:
+    - 'REST API Method'
+    required: yes
+    type: str
+    choices: ['GET', 'POST', 'PUT', 'DELETE']
+  path:
+    description:
+    - 'REST API Path Endpoint'
+    required: yes
+    type: str
+  data:
+    description:
+    - 'Additional data in JSON or TEXT to include with the REST API call'
+    aliases:
+    - json_data
+    required: no
+    type: raw
