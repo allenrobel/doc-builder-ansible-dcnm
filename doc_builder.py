@@ -1,8 +1,6 @@
 #!/usr/bin/env python
-import copy
 import re
 import sys
-import json
 import yaml
 from typing import Any, Dict, List, Union
 
@@ -129,13 +127,13 @@ def top_level_keys(d: Dict[str, Any]):
     2.  Add the other top-level keys as code block
         with Material for Mkdocs TOC admonition
         ('???+ "Details"').
-    3.  Escape the '-' character in the description
-        so that pyyaml does not interpret is as a list.
+    3.  escape_description has already been called on the
+        content, so the description includes ESC_HYPHEN
+        which needs to be converted back to '-'.
 
     See also:
 
-    -   dict2markdown which converts ESC_HYPHEN
-        back to '-'.
+    -   escape_description() which converts - to ESC_HYPHEN.
     """
     skip_keys = ["doclevel", "options", "suboptions"]
     for key, value in d.items():
@@ -144,6 +142,12 @@ def top_level_keys(d: Dict[str, Any]):
         if key == "module":
             print(f"# {value}\n")
             print('???+ "Details"\n')
+            break
+
+    for key, value in d.items():
+        if key in skip_keys:
+            continue
+        if key == "module":
             continue
         if key == "description":
             print(f"    - {key}")
@@ -205,7 +209,7 @@ def dict2markdown(d: Dict[str, Any]) -> str:
                         print(f"{' ' * 3}     - {item}")
                         continue
                 continue
-            if key in dict_keys and level > 1:
+            if key in dict_keys and level > 1 and not isinstance(value, dict):
                 if not isinstance(value, (str, int, bool)):
                     continue
                 print(f"{' ' * 3} - {key}")
@@ -245,23 +249,116 @@ def impose_heading_levels(d: Dict[str, Any]) -> Dict[str, Any]:
     d['doclevel'] = 1
     return d
 
-def remove_suboptions(md: str) -> str:
+def escape_description(content: str) -> str:
     """
-    Given markdown content, remove headings containing
-    the string "suboptions".
+    # Summary
+
+    Given YAML content:
+    
+    1.  Convert to python dict
+    2.  Rename all description keys to ESC_DESCRIPTION if that key's
+        value is a dictionary and the value contains a key named description.
+    3.  Convert back to YAML content and return the content
+
+    # Discussion
+
+    The description key is a standard key name in the ansible-dcnm repository's
+    module documentation.  If the module itself also contains a key named
+    description, we want to avoid processing it, in fix_descriptions(), as a
+    standard key.
+
+    Example:
+
+    ``` yaml
+    description:
+        description:
+        - The image policy's description.
+        - Blah blah more details about the image policy's description.
+        type: str
+        required: false
+    ```
+
+    The outer description key is renamed to ESC_DESCRIPTION to avoid processing
+    in fix_descriptions().  The above snippet becomes:
+
+    ``` yaml
+    ESC_DESCRIPTION:
+        description: An interface description.
+        type: str
+        required: false
+    ```
+
+    The fix_descriptions() function will process the inner description key.
+    to escape the '-' character in the description with ESC_HYPHEN, but will
+    not process the outer description key since it has been renamed to
+    ESC_DESCRIPTION.
     """
-    new_md = ""
-    for line in md.split("\n"):
-        if "suboptions" in line:
-            continue
-        new_md += line + "\n"
-    return new_md
+    def recurse(d):
+        for key, value in d.items():
+            if isinstance(value, dict):
+                if key == "description":
+                    description = value.get("description")
+                    if description is not None:
+                        key = "ESC_DESCRIPTION"
+                recurse(value)
+            if isinstance(value, list):
+                for item in value:
+                    if isinstance(item, dict):
+                        recurse(item)
+    d = yaml2dict(content)
+    recurse(d)
+    return yaml.dump(d)
+
+def unescape_description(content: str) -> str:
+    """
+    # Summary
+
+    Given YAML content:
+    
+    1.  Convert to python dict
+    2.  Rename all ESC_DESCRIPTION keys to description.
+    3.  Convert back to YAML content and return the content
+
+    # Discussion
+
+    See escape_description() for details as to why we need to escape
+    and unescape the description key.
+    """
+    def recurse(d):
+        for key, value in d.items():
+            if key == "ESC_DESCRIPTION":
+                key = "description"
+            if isinstance(value, dict):
+                recurse(value)
+            if isinstance(value, list):
+                for item in value:
+                    if isinstance(item, dict):
+                        recurse(item)
+    d = yaml2dict(content)
+    recurse(d)
+    return yaml.dump(d)
+
+# def remove_suboptions(md: str) -> str:
+#     """
+#     # Summary
+
+#     Given markdown content, remove headings containing
+#     the string "suboptions".
+#     """
+#     new_md = ""
+#     for line in md.split("\n"):
+#         if "suboptions" in line:
+#             continue
+#         new_md += line + "\n"
+#     return new_md
 
 input_file = sys.argv[1]
 content = load_yaml(input_file)
+content = escape_description(content)
 content = fix_descriptions(content)
+content = unescape_description(content)
 content = fix_default(content)
-if input_file == "dcnm_fabric.yaml":
+if "dcnm_fabric" in input_file:
     content = fix_bootstrap_multisubnet(content)
 content_dict = yaml2dict(content)
 content_dict = impose_heading_levels(content_dict)
