@@ -57,7 +57,7 @@ options:
         type: str
         required: true
 
-      description1:
+      description:
         description:
         - Description of the policy. The description may include the details regarding the policy i.e. the arguments if
           any etc.
@@ -85,7 +85,7 @@ options:
           on the tmeplate that is used by the policy.
         type: dict
         required: false
-        default: '{}'
+        default: {}
 
       switch:
         description:
@@ -120,7 +120,7 @@ options:
                 type: str
                 required: true
 
-              description1:
+              description:
                 description:
                 - Description of the policy. The description may include the details regarding the policy
                 type: str
@@ -147,4 +147,4 @@ options:
                   on the tmeplate that is used by the policy.
                 type: dict
                 required: false
-                default: '{}'
+                default: {}

@@ -71,7 +71,7 @@ options:
           - The last 3 template choices are applicable for inter-fabric links and the others
             are applicable for intra-fabric links.
           - This parameter is required only for 'merged' and 'replaced' states. It is
-            optional for other states.
+          - optional for other states.
         type: str
         required: true
         choices:

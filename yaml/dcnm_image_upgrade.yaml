@@ -1,3 +1,4 @@
+---
 module: dcnm_image_upgrade
 short_description: Image management for Nexus switches
 version_added: "3.5.0"
@@ -271,3 +272,4 @@ options:
                                         type: bool
                                         required: false
                                         default: False
+

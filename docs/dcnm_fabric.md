@@ -2,14 +2,14 @@
 
 ???+ "Details"
 
-    - short_description
-        - Manage creation and configuration of NDFC fabrics.
-    - version_added
-        - 3.5.0
     - author
         - Allen Robel (@quantumonion)
     - description
         - Create, delete, update NDFC fabrics.
+    - short_description
+        - Manage creation and configuration of NDFC fabrics.
+    - version_added
+        - 3.5.0
 
 
 ## options
@@ -17,41 +17,12 @@
 ???+ "Details"
 
 
-### state
-
-???+ "Details"
-
-    - choices
-        - deleted
-        - merged
-        - query
-        - replaced
-    - default
-        - merged
-    - description
-        - The state of the feature or object after module completion
-    - type
-        - str
-
-### skip_validation
-
-???+ "Details"
-
-    - default
-        - False
-    - description
-        - Skip playbook parameter validation.  Useful for debugging.
-    - type
-        - bool
-
 ### config
 
 ???+ "Details"
 
     - description
         - A list of fabric configuration dictionaries
-    - type
-        - list
     - elements
         - dict
 
@@ -93,6 +64,2503 @@
         - The type of fabric.
     - required
         - True
+    - type
+        - str
+
+#### IPFM_FABRIC_PARAMETERS
+
+???+ "Details"
+
+    - description
+        - IPFM (IP Fabric for Media) fabric specific parameters. 
+        - The following parameters are specific to IPFM fabrics. 
+        - Fabric for a fully automated deployment of IP Fabric for Media Network with Nexus 9000 switches. 
+        - The indentation of these parameters is meant only to logically group them. 
+        - They should be at the same YAML level as FABRIC_TYPE and FABRIC_NAME.
+
+##### AAA_REMOTE_IP_ENABLED
+
+???+ "Details"
+
+    - default
+        - False
+    - description
+        - Enable only, when IP Authorization is enabled in the AAA Server
+    - required
+        - False
+    - type
+        - bool
+
+##### AAA_SERVER_CONF
+
+???+ "Details"
+
+    - default
+        - 
+    - description
+        - AAA Configurations
+    - required
+        - False
+    - type
+        - str
+
+##### ASM_GROUP_RANGES
+
+???+ "Details"
+
+    - default
+        - 
+    - description
+        - ASM group ranges with prefixes (len:4-32) example: 239.1.1.0/25, max 20 ranges. Enabling SPT-Threshold Infinity to prevent switchover to source-tree.
+    - elements
+        - str
+    - required
+        - False
+    - type
+        - list
+
+##### BOOTSTRAP_CONF
+
+???+ "Details"
+
+    - default
+        - 
+    - description
+        - Additional CLIs required during device bootup/login e.g. AAA/Radius
+    - required
+        - False
+    - type
+        - str
+
+##### BOOTSTRAP_ENABLE
+
+???+ "Details"
+
+    - default
+        - False
+    - description
+        - Automatic IP Assignment For POAP
+    - required
+        - False
+    - type
+        - bool
+
+##### BOOTSTRAP_MULTISUBNET
+
+???+ "Details"
+
+    - default
+        - Scope_Start_IP, Scope_End_IP, Scope_Default_Gateway, Scope_Subnet_Prefix
+    - description
+        - 'lines with
+    - required
+        - False
+    - type
+        - str
+
+##### CDP_ENABLE
+
+???+ "Details"
+
+    - default
+        - False
+    - description
+        - Enable CDP on management interface
+    - required
+        - False
+    - type
+        - bool
+
+##### DHCP_ENABLE
+
+???+ "Details"
+
+    - default
+        - False
+    - description
+        - Automatic IP Assignment For POAP From Local DHCP Server
+    - required
+        - False
+    - type
+        - bool
+
+##### DHCP_END
+
+???+ "Details"
+
+    - default
+        - 
+    - description
+        - End Address For Switch Out-of-Band POAP
+    - required
+        - False
+    - type
+        - str
+
+##### DHCP_IPV6_ENABLE
+
+???+ "Details"
+
+    - choices
+        - DHCPv4
+    - default
+        - DHCPv4
+    - description
+        - No description available
+    - required
+        - False
+    - type
+        - str
+
+##### DHCP_START
+
+???+ "Details"
+
+    - default
+        - 
+    - description
+        - Start Address For Switch Out-of-Band POAP
+    - required
+        - False
+    - type
+        - str
+
+##### DNS_SERVER_IP_LIST
+
+???+ "Details"
+
+    - default
+        - 
+    - description
+        - Comma separated list of IP Addresses (v4/v6)
+    - required
+        - False
+    - type
+        - str
+
+##### DNS_SERVER_VRF
+
+???+ "Details"
+
+    - default
+        - 
+    - description
+        - One VRF for all DNS servers or a comma separated list of VRFs, one per DNS server
+    - required
+        - False
+    - type
+        - str
+
+##### ENABLE_AAA
+
+???+ "Details"
+
+    - default
+        - False
+    - description
+        - Include AAA configs from Manageability tab during device bootup
+    - required
+        - False
+    - type
+        - bool
+
+##### ENABLE_ASM
+
+???+ "Details"
+
+    - default
+        - False
+    - description
+        - Enable groups with receivers sending (*,G) joins
+    - required
+        - False
+    - type
+        - bool
+
+##### ENABLE_NBM_PASSIVE
+
+???+ "Details"
+
+    - default
+        - False
+    - description
+        - Enable NBM mode to pim-passive for default VRF
+    - required
+        - False
+    - type
+        - bool
+
+##### EXTRA_CONF_INTRA_LINKS
+
+???+ "Details"
+
+    - default
+        - 
+    - description
+        - Additional CLIs For All Intra-Fabric Links
+    - required
+        - False
+    - type
+        - str
+
+##### EXTRA_CONF_LEAF
+
+???+ "Details"
+
+    - default
+        - 
+    - description
+        - Additional CLIs For All Leafs and Tier2 Leafs As Captured From Show Running Configuration
+    - required
+        - False
+    - type
+        - str
+
+##### EXTRA_CONF_SPINE
+
+???+ "Details"
+
+    - default
+        - 
+    - description
+        - Additional CLIs For All Spines As Captured From Show Running Configuration
+    - required
+        - False
+    - type
+        - str
+
+##### FABRIC_INTERFACE_TYPE
+
+???+ "Details"
+
+    - choices
+        - p2p
+    - default
+        - p2p
+    - description
+        - Only Numbered(Point-to-Point) is supported
+    - required
+        - False
+    - type
+        - str
+
+##### FABRIC_MTU
+
+???+ "Details"
+
+    - default
+        - 9216
+    - description
+        - . Must be an even number
+    - required
+        - False
+    - type
+        - int
+
+##### FABRIC_NAME
+
+???+ "Details"
+
+    - default
+        - 
+    - description
+        - Name of the fabric (Max Size 64)
+    - required
+        - False
+    - type
+        - str
+
+##### FEATURE_PTP
+
+???+ "Details"
+
+    - default
+        - False
+    - description
+        - No description available
+    - required
+        - False
+    - type
+        - bool
+
+##### ISIS_AUTH_ENABLE
+
+???+ "Details"
+
+    - default
+        - False
+    - description
+        - No description available
+    - required
+        - False
+    - type
+        - bool
+
+##### ISIS_AUTH_KEY
+
+???+ "Details"
+
+    - default
+        - 
+    - description
+        - Cisco Type 7 Encrypted
+    - required
+        - False
+    - type
+        - str
+
+##### ISIS_AUTH_KEYCHAIN_KEY_ID
+
+???+ "Details"
+
+    - default
+        - 127
+    - description
+        - No description available
+    - required
+        - False
+    - type
+        - int
+
+##### ISIS_AUTH_KEYCHAIN_NAME
+
+???+ "Details"
+
+    - default
+        - 
+    - description
+        - No description available
+    - required
+        - False
+    - type
+        - str
+
+##### ISIS_LEVEL
+
+???+ "Details"
+
+    - choices
+        - level-1
+        - level-2
+    - default
+        - level-2
+    - description
+        - Supported IS types: level-1, level-2
+    - required
+        - False
+    - type
+        - str
+
+##### ISIS_P2P_ENABLE
+
+???+ "Details"
+
+    - default
+        - True
+    - description
+        - This will enable network point-to-point on fabric interfaces which are numbered
+    - required
+        - False
+    - type
+        - bool
+
+##### L2_HOST_INTF_MTU
+
+???+ "Details"
+
+    - default
+        - 9216
+    - description
+        - . Must be an even number
+    - required
+        - False
+    - type
+        - int
+
+##### LINK_STATE_ROUTING
+
+???+ "Details"
+
+    - choices
+        - ospf
+        - is-is
+    - default
+        - ospf
+    - description
+        - Used for Spine-Leaf Connectivity
+    - required
+        - False
+    - type
+        - str
+
+##### LINK_STATE_ROUTING_TAG
+
+???+ "Details"
+
+    - default
+        - 1
+    - description
+        - Routing process tag for the fabric
+    - required
+        - False
+    - type
+        - str
+
+##### LOOPBACK0_IP_RANGE
+
+???+ "Details"
+
+    - default
+        - 10.2.0.0/22
+    - description
+        - Routing Loopback IP Address Range
+    - required
+        - False
+    - type
+        - str
+
+##### MGMT_GW
+
+???+ "Details"
+
+    - default
+        - 
+    - description
+        - Default Gateway For Management VRF On The Switch
+    - required
+        - False
+    - type
+        - str
+
+##### MGMT_PREFIX
+
+???+ "Details"
+
+    - default
+        - 24
+    - description
+        - No description available
+    - required
+        - False
+    - type
+        - int
+
+##### NTP_SERVER_IP_LIST
+
+???+ "Details"
+
+    - default
+        - 
+    - description
+        - Comma separated list of IP Addresses (v4/v6)
+    - required
+        - False
+    - type
+        - str
+
+##### NTP_SERVER_VRF
+
+???+ "Details"
+
+    - default
+        - 
+    - description
+        - One VRF for all NTP servers or a comma separated list of VRFs, one per NTP server
+    - required
+        - False
+    - type
+        - str
+
+##### NXAPI_VRF
+
+???+ "Details"
+
+    - choices
+        - management
+        - default
+    - default
+        - management
+    - description
+        - VRF used for NX-API communication
+    - required
+        - False
+    - type
+        - str
+
+##### OSPF_AREA_ID
+
+???+ "Details"
+
+    - default
+        - 0.0.0.0
+    - description
+        - OSPF Area Id in IP address format
+    - required
+        - False
+    - type
+        - str
+
+##### OSPF_AUTH_ENABLE
+
+???+ "Details"
+
+    - default
+        - False
+    - description
+        - No description available
+    - required
+        - False
+    - type
+        - bool
+
+##### OSPF_AUTH_KEY
+
+???+ "Details"
+
+    - default
+        - 
+    - description
+        - 3DES Encrypted
+    - required
+        - False
+    - type
+        - str
+
+##### OSPF_AUTH_KEY_ID
+
+???+ "Details"
+
+    - default
+        - 127
+    - description
+        - No description available
+    - required
+        - False
+    - type
+        - int
+
+##### PIM_HELLO_AUTH_ENABLE
+
+???+ "Details"
+
+    - default
+        - False
+    - description
+        - No description available
+    - required
+        - False
+    - type
+        - bool
+
+##### PIM_HELLO_AUTH_KEY
+
+???+ "Details"
+
+    - default
+        - 
+    - description
+        - 3DES Encrypted
+    - required
+        - False
+    - type
+        - str
+
+##### PM_ENABLE
+
+???+ "Details"
+
+    - default
+        - False
+    - description
+        - No description available
+    - required
+        - False
+    - type
+        - bool
+
+##### POWER_REDUNDANCY_MODE
+
+???+ "Details"
+
+    - choices
+        - ps-redundant
+        - combined
+        - insrc-redundant
+    - default
+        - ps-redundant
+    - description
+        - Default power supply mode for the fabric
+    - required
+        - False
+    - type
+        - str
+
+##### PTP_DOMAIN_ID
+
+???+ "Details"
+
+    - default
+        - 0
+    - description
+        - 'Multiple Independent PTP Clocking Subdomains on a Single Network '
+    - required
+        - False
+    - type
+        - int
+
+##### PTP_LB_ID
+
+???+ "Details"
+
+    - default
+        - 0
+    - description
+        - No description available
+    - required
+        - False
+    - type
+        - int
+
+##### PTP_PROFILE
+
+???+ "Details"
+
+    - choices
+        - IEEE-1588v2
+        - SMPTE-2059-2
+        - AES67-2015
+    - default
+        - SMPTE-2059-2
+    - description
+        - Enabled on ISL links only
+    - required
+        - False
+    - type
+        - str
+
+##### ROUTING_LB_ID
+
+???+ "Details"
+
+    - default
+        - 0
+    - description
+        - No description available
+    - required
+        - False
+    - type
+        - int
+
+##### RP_IP_RANGE
+
+???+ "Details"
+
+    - default
+        - 10.254.254.0/24
+    - description
+        - RP Loopback IP Address Range
+    - required
+        - False
+    - type
+        - str
+
+##### RP_LB_ID
+
+???+ "Details"
+
+    - default
+        - 254
+    - description
+        - No description available
+    - required
+        - False
+    - type
+        - int
+
+##### SNMP_SERVER_HOST_TRAP
+
+???+ "Details"
+
+    - default
+        - True
+    - description
+        - Configure NDFC as a receiver for SNMP traps
+    - required
+        - False
+    - type
+        - bool
+
+##### STATIC_UNDERLAY_IP_ALLOC
+
+???+ "Details"
+
+    - default
+        - False
+    - description
+        - Checking this will disable Dynamic Fabric IP Address Allocations
+    - required
+        - False
+    - type
+        - bool
+
+##### SUBNET_RANGE
+
+???+ "Details"
+
+    - default
+        - 10.4.0.0/16
+    - description
+        - Address range to assign Numbered IPs
+    - required
+        - False
+    - type
+        - str
+
+##### SUBNET_TARGET_MASK
+
+???+ "Details"
+
+    - choices
+        - 30
+        - 31
+    - default
+        - 30
+    - description
+        - Mask for Fabric Subnet IP Range
+    - required
+        - False
+    - type
+        - int
+
+##### SYSLOG_SERVER_IP_LIST
+
+???+ "Details"
+
+    - default
+        - 
+    - description
+        - Comma separated list of IP Addresses (v4/v6)
+    - required
+        - False
+    - type
+        - str
+
+##### SYSLOG_SERVER_VRF
+
+???+ "Details"
+
+    - default
+        - 
+    - description
+        - One VRF for all Syslog servers or a comma separated list of VRFs, one per Syslog server
+    - required
+        - False
+    - type
+        - str
+
+##### SYSLOG_SEV
+
+???+ "Details"
+
+    - default
+        - 
+    - description
+        - 'Comma separated list of Syslog severity values, one per Syslog server '
+    - required
+        - False
+    - type
+        - str
+
+#### ISN_FABRIC_PARAMETERS
+
+???+ "Details"
+
+    - description
+        - ISN (Inter-site Network) fabric specific parameters. 
+        - Also known as Multi-Site External Network. 
+        - The following parameters are specific to ISN fabrics. 
+        - Network infrastructure attached to Border Gateways to interconnect VXLAN EVPN fabrics for Multi-Site and Multi-Cloud deployments. 
+        - The indentation of these parameters is meant only to logically group them. 
+        - They should be at the same YAML level as FABRIC_TYPE and FABRIC_NAME.
+
+##### AAA_REMOTE_IP_ENABLED
+
+???+ "Details"
+
+    - default
+        - False
+    - description
+        - Enable only, when IP Authorization is enabled in the AAA Server
+    - required
+        - False
+    - type
+        - bool
+
+##### AAA_SERVER_CONF
+
+???+ "Details"
+
+    - default
+        - 
+    - description
+        - AAA Configurations
+    - required
+        - False
+    - type
+        - str
+
+##### BGP_AS
+
+???+ "Details"
+
+    - default
+        - 
+    - description
+        - 1-4294967295 | 1-65535.0-65535 It is a good practice to have a unique ASN for each Fabric.
+    - required
+        - False
+    - type
+        - str
+
+##### BOOTSTRAP_CONF
+
+???+ "Details"
+
+    - default
+        - 
+    - description
+        - Additional CLIs required during device bootup/login e.g. AAA/Radius
+    - required
+        - False
+    - type
+        - str
+
+##### BOOTSTRAP_CONF_XE
+
+???+ "Details"
+
+    - default
+        - 
+    - description
+        - Additional CLIs required during device bootup/login e.g. AAA/Radius
+    - required
+        - False
+    - type
+        - str
+
+##### BOOTSTRAP_ENABLE
+
+???+ "Details"
+
+    - default
+        - False
+    - description
+        - Automatic IP Assignment For POAP
+    - required
+        - False
+    - type
+        - bool
+
+##### BOOTSTRAP_MULTISUBNET
+
+???+ "Details"
+
+    - default
+        - Scope_Start_IP, Scope_End_IP, Scope_Default_Gateway, Scope_Subnet_Prefix
+    - description
+        - 'lines with
+    - required
+        - False
+    - type
+        - str
+
+##### CDP_ENABLE
+
+???+ "Details"
+
+    - default
+        - False
+    - description
+        - Enable CDP on management interface
+    - required
+        - False
+    - type
+        - bool
+
+##### DHCP_ENABLE
+
+???+ "Details"
+
+    - default
+        - False
+    - description
+        - Automatic IP Assignment For POAP From Local DHCP Server
+    - required
+        - False
+    - type
+        - bool
+
+##### DHCP_END
+
+???+ "Details"
+
+    - default
+        - 
+    - description
+        - End Address For Switch POAP
+    - required
+        - False
+    - type
+        - str
+
+##### DHCP_IPV6_ENABLE
+
+???+ "Details"
+
+    - choices
+        - DHCPv4
+        - DHCPv6
+    - default
+        - DHCPv4
+    - description
+        - No description available
+    - required
+        - False
+    - type
+        - str
+
+##### DHCP_START
+
+???+ "Details"
+
+    - default
+        - 
+    - description
+        - Start Address For Switch POAP
+    - required
+        - False
+    - type
+        - str
+
+##### DOMAIN_NAME
+
+???+ "Details"
+
+    - default
+        - 
+    - description
+        - Domain name for DHCP server PnP block
+    - required
+        - False
+    - type
+        - str
+
+##### ENABLE_AAA
+
+???+ "Details"
+
+    - default
+        - False
+    - description
+        - Include AAA configs from Advanced tab during device bootup
+    - required
+        - False
+    - type
+        - bool
+
+##### ENABLE_NETFLOW
+
+???+ "Details"
+
+    - default
+        - False
+    - description
+        - Enable Netflow on VTEPs
+    - required
+        - False
+    - type
+        - bool
+
+##### ENABLE_NXAPI
+
+???+ "Details"
+
+    - default
+        - False
+    - description
+        - Enable HTTPS NX-API
+    - required
+        - False
+    - type
+        - bool
+
+##### ENABLE_NXAPI_HTTP
+
+???+ "Details"
+
+    - default
+        - False
+    - description
+        - No description available
+    - required
+        - False
+    - type
+        - bool
+
+##### ENABLE_RT_INTF_STATS
+
+???+ "Details"
+
+    - default
+        - False
+    - description
+        - Valid for NX-OS only
+    - required
+        - False
+    - type
+        - bool
+
+##### FABRIC_FREEFORM
+
+???+ "Details"
+
+    - default
+        - 
+    - description
+        - Additional supported CLIs for all same OS (e.g. all NxOS or IOS-XE, etc) switches
+    - required
+        - False
+    - type
+        - str
+
+##### FABRIC_NAME
+
+???+ "Details"
+
+    - default
+        - 
+    - description
+        - Please provide the fabric name to create it (Max Size 64)
+    - required
+        - False
+    - type
+        - str
+
+##### FEATURE_PTP
+
+???+ "Details"
+
+    - default
+        - False
+    - description
+        - No description available
+    - required
+        - False
+    - type
+        - bool
+
+##### INBAND_ENABLE
+
+???+ "Details"
+
+    - default
+        - False
+    - description
+        - Enable POAP over Inband Interface (Pre-req: Inband Mgmt Knob should be Enabled)
+    - required
+        - False
+    - type
+        - bool
+
+##### INBAND_MGMT
+
+???+ "Details"
+
+    - default
+        - False
+    - description
+        - Import switches with inband connectivity
+    - required
+        - False
+    - type
+        - bool
+
+##### INTF_STAT_LOAD_INTERVAL
+
+???+ "Details"
+
+    - default
+        - 10
+    - description
+        - 'Time in seconds '
+    - required
+        - False
+    - type
+        - int
+
+##### IS_READ_ONLY
+
+???+ "Details"
+
+    - default
+        - True
+    - description
+        - If enabled, fabric is only monitored. No configuration will be deployed
+    - required
+        - False
+    - type
+        - bool
+
+##### MGMT_GW
+
+???+ "Details"
+
+    - default
+        - 
+    - description
+        - Default Gateway For Management VRF On The Switch
+    - required
+        - False
+    - type
+        - str
+
+##### MGMT_PREFIX
+
+???+ "Details"
+
+    - default
+        - 24
+    - description
+        - No description available
+    - required
+        - False
+    - type
+        - int
+
+##### MGMT_V6PREFIX
+
+???+ "Details"
+
+    - default
+        - 64
+    - description
+        - No description available
+    - required
+        - False
+    - type
+        - int
+
+##### MPLS_HANDOFF
+
+???+ "Details"
+
+    - default
+        - False
+    - description
+        - No description available
+    - required
+        - False
+    - type
+        - bool
+
+##### MPLS_LB_ID
+
+???+ "Details"
+
+    - default
+        - 101
+    - description
+        - No description available
+    - required
+        - False
+    - type
+        - int
+
+##### MPLS_LOOPBACK_IP_RANGE
+
+???+ "Details"
+
+    - default
+        - 10.102.0.0/25
+    - description
+        - MPLS Loopback IP Address Range
+    - required
+        - False
+    - type
+        - str
+
+##### NETFLOW_EXPORTER_LIST
+
+???+ "Details"
+
+    - default
+        - 
+    - description
+        - One or Multiple Netflow Exporters
+    - elements
+        - str
+    - required
+        - False
+    - type
+        - list
+
+##### NETFLOW_MONITOR_LIST
+
+???+ "Details"
+
+    - default
+        - 
+    - description
+        - One or Multiple Netflow Monitors
+    - elements
+        - str
+    - required
+        - False
+    - type
+        - list
+
+##### NETFLOW_RECORD_LIST
+
+???+ "Details"
+
+    - default
+        - 
+    - description
+        - One or Multiple Netflow Records
+    - elements
+        - str
+    - required
+        - False
+    - type
+        - list
+
+##### NETFLOW_SAMPLER_LIST
+
+???+ "Details"
+
+    - default
+        - 
+    - description
+        - One or multiple netflow samplers. Applicable to N7K only
+    - elements
+        - str
+    - required
+        - False
+    - type
+        - list
+
+##### NXAPI_HTTPS_PORT
+
+???+ "Details"
+
+    - default
+        - 443
+    - description
+        - No description available
+    - required
+        - False
+    - type
+        - int
+
+##### NXAPI_HTTP_PORT
+
+???+ "Details"
+
+    - default
+        - 80
+    - description
+        - No description available
+    - required
+        - False
+    - type
+        - int
+
+##### PM_ENABLE
+
+???+ "Details"
+
+    - default
+        - False
+    - description
+        - No description available
+    - required
+        - False
+    - type
+        - bool
+
+##### PNP_ENABLE
+
+???+ "Details"
+
+    - default
+        - False
+    - description
+        - Enable Plug n Play (Automatic IP Assignment) for Cat9K switches
+    - required
+        - False
+    - type
+        - bool
+
+##### POWER_REDUNDANCY_MODE
+
+???+ "Details"
+
+    - choices
+        - ps-redundant
+        - combined
+        - insrc-redundant
+    - default
+        - ps-redundant
+    - description
+        - Default Power Supply Mode For Bootstrapped NX-OS Switches
+    - required
+        - False
+    - type
+        - str
+
+##### PTP_DOMAIN_ID
+
+???+ "Details"
+
+    - default
+        - 0
+    - description
+        - 'Multiple Independent PTP Clocking Subdomains on a Single Network '
+    - required
+        - False
+    - type
+        - int
+
+##### PTP_LB_ID
+
+???+ "Details"
+
+    - default
+        - 0
+    - description
+        - No description available
+    - required
+        - False
+    - type
+        - int
+
+##### SNMP_SERVER_HOST_TRAP
+
+???+ "Details"
+
+    - default
+        - True
+    - description
+        - Configure NDFC as a receiver for SNMP traps
+    - required
+        - False
+    - type
+        - bool
+
+##### SUBINTERFACE_RANGE
+
+???+ "Details"
+
+    - default
+        - 2-511
+    - description
+        - 'Per Border Dot1q Range For VRF Lite Connectivity '
+    - required
+        - False
+    - type
+        - str
+
+##### enableRealTimeBackup
+
+???+ "Details"
+
+    - default
+        - 
+    - description
+        - Backup hourly only if there is any config deployment since last backup
+    - required
+        - False
+    - type
+        - bool
+
+##### enableScheduledBackup
+
+???+ "Details"
+
+    - default
+        - 
+    - description
+        - Backup at the specified time
+    - required
+        - False
+    - type
+        - bool
+
+##### scheduledTime
+
+???+ "Details"
+
+    - default
+        - 
+    - description
+        - Time (UTC) in 24hr format. (00:00 to 23:59)
+    - required
+        - False
+    - type
+        - str
+
+#### LAN_CLASSIC_FABRIC_PARAMETERS
+
+???+ "Details"
+
+    - description
+        - LAN Classic fabric specific parameters. 
+        - The following parameters are specific to Classic LAN fabrics. 
+        - Fabric to manage a legacy Classic LAN deployment with Nexus switches. 
+        - The indentation of these parameters is meant only to logically group them. 
+        - They should be at the same YAML level as FABRIC_TYPE and FABRIC_NAME.
+
+##### AAA_REMOTE_IP_ENABLED
+
+???+ "Details"
+
+    - default
+        - False
+    - description
+        - Enable only, when IP Authorization is enabled in the AAA Server
+    - required
+        - False
+    - type
+        - bool
+
+##### AAA_SERVER_CONF
+
+???+ "Details"
+
+    - default
+        - 
+    - description
+        - AAA Configurations
+    - required
+        - False
+    - type
+        - str
+
+##### BOOTSTRAP_CONF
+
+???+ "Details"
+
+    - default
+        - 
+    - description
+        - Additional CLIs required during device bootup/login e.g. AAA/Radius
+    - required
+        - False
+    - type
+        - str
+
+##### BOOTSTRAP_ENABLE
+
+???+ "Details"
+
+    - default
+        - False
+    - description
+        - Automatic IP Assignment For POAP
+    - required
+        - False
+    - type
+        - bool
+
+##### BOOTSTRAP_MULTISUBNET
+
+???+ "Details"
+
+    - default
+        - Scope_Start_IP, Scope_End_IP, Scope_Default_Gateway, Scope_Subnet_Prefix
+    - description
+        - 'lines with
+    - required
+        - False
+    - type
+        - str
+
+##### CDP_ENABLE
+
+???+ "Details"
+
+    - default
+        - False
+    - description
+        - Enable CDP on management interface
+    - required
+        - False
+    - type
+        - bool
+
+##### DHCP_ENABLE
+
+???+ "Details"
+
+    - default
+        - False
+    - description
+        - Automatic IP Assignment For POAP From Local DHCP Server
+    - required
+        - False
+    - type
+        - bool
+
+##### DHCP_END
+
+???+ "Details"
+
+    - default
+        - 
+    - description
+        - End Address For Switch POAP
+    - required
+        - False
+    - type
+        - str
+
+##### DHCP_IPV6_ENABLE
+
+???+ "Details"
+
+    - choices
+        - DHCPv4
+        - DHCPv6
+    - default
+        - DHCPv4
+    - description
+        - No description available
+    - required
+        - False
+    - type
+        - str
+
+##### DHCP_START
+
+???+ "Details"
+
+    - default
+        - 
+    - description
+        - Start Address For Switch POAP
+    - required
+        - False
+    - type
+        - str
+
+##### ENABLE_AAA
+
+???+ "Details"
+
+    - default
+        - False
+    - description
+        - Include AAA configs from Advanced tab during device bootup
+    - required
+        - False
+    - type
+        - bool
+
+##### ENABLE_NETFLOW
+
+???+ "Details"
+
+    - default
+        - False
+    - description
+        - Enable Netflow on VTEPs
+    - required
+        - False
+    - type
+        - bool
+
+##### ENABLE_NXAPI
+
+???+ "Details"
+
+    - default
+        - False
+    - description
+        - Enable HTTPS NX-API
+    - required
+        - False
+    - type
+        - bool
+
+##### ENABLE_NXAPI_HTTP
+
+???+ "Details"
+
+    - default
+        - False
+    - description
+        - No description available
+    - required
+        - False
+    - type
+        - bool
+
+##### FABRIC_FREEFORM
+
+???+ "Details"
+
+    - default
+        - 
+    - description
+        - Additional supported CLIs for all same OS (e.g. all NxOS etc) switches
+    - required
+        - False
+    - type
+        - str
+
+##### FABRIC_NAME
+
+???+ "Details"
+
+    - default
+        - 
+    - description
+        - Please provide the fabric name to create it (Max Size 64)
+    - required
+        - False
+    - type
+        - str
+
+##### FEATURE_PTP
+
+???+ "Details"
+
+    - default
+        - False
+    - description
+        - No description available
+    - required
+        - False
+    - type
+        - bool
+
+##### INBAND_ENABLE
+
+???+ "Details"
+
+    - default
+        - False
+    - description
+        - Enable POAP over Inband Interface (Pre-req: Inband Mgmt Knob should be Enabled)
+    - required
+        - False
+    - type
+        - bool
+
+##### INBAND_MGMT
+
+???+ "Details"
+
+    - default
+        - False
+    - description
+        - Import switches with inband connectivity
+    - required
+        - False
+    - type
+        - bool
+
+##### IS_READ_ONLY
+
+???+ "Details"
+
+    - default
+        - True
+    - description
+        - If enabled, fabric is only monitored. No configuration will be deployed
+    - required
+        - False
+    - type
+        - bool
+
+##### MGMT_GW
+
+???+ "Details"
+
+    - default
+        - 
+    - description
+        - Default Gateway For Management VRF On The Switch
+    - required
+        - False
+    - type
+        - str
+
+##### MGMT_PREFIX
+
+???+ "Details"
+
+    - default
+        - 24
+    - description
+        - No description available
+    - required
+        - False
+    - type
+        - int
+
+##### MGMT_V6PREFIX
+
+???+ "Details"
+
+    - default
+        - 64
+    - description
+        - No description available
+    - required
+        - False
+    - type
+        - int
+
+##### MPLS_HANDOFF
+
+???+ "Details"
+
+    - default
+        - False
+    - description
+        - No description available
+    - required
+        - False
+    - type
+        - bool
+
+##### MPLS_LB_ID
+
+???+ "Details"
+
+    - default
+        - 101
+    - description
+        - No description available
+    - required
+        - False
+    - type
+        - int
+
+##### MPLS_LOOPBACK_IP_RANGE
+
+???+ "Details"
+
+    - default
+        - 10.102.0.0/25
+    - description
+        - MPLS Loopback IP Address Range
+    - required
+        - False
+    - type
+        - str
+
+##### NETFLOW_EXPORTER_LIST
+
+???+ "Details"
+
+    - default
+        - 
+    - description
+        - One or Multiple Netflow Exporters
+    - elements
+        - str
+    - required
+        - False
+    - type
+        - list
+
+##### NETFLOW_MONITOR_LIST
+
+???+ "Details"
+
+    - default
+        - 
+    - description
+        - One or Multiple Netflow Monitors
+    - elements
+        - str
+    - required
+        - False
+    - type
+        - list
+
+##### NETFLOW_RECORD_LIST
+
+???+ "Details"
+
+    - default
+        - 
+    - description
+        - One or Multiple Netflow Records
+    - elements
+        - str
+    - required
+        - False
+    - type
+        - list
+
+##### NETFLOW_SAMPLER_LIST
+
+???+ "Details"
+
+    - default
+        - 
+    - description
+        - One or multiple netflow Samplers. Applicable to N7K only
+    - elements
+        - str
+    - required
+        - False
+    - type
+        - list
+
+##### NXAPI_HTTPS_PORT
+
+???+ "Details"
+
+    - default
+        - 443
+    - description
+        - No description available
+    - required
+        - False
+    - type
+        - int
+
+##### NXAPI_HTTP_PORT
+
+???+ "Details"
+
+    - default
+        - 80
+    - description
+        - No description available
+    - required
+        - False
+    - type
+        - int
+
+##### PM_ENABLE
+
+???+ "Details"
+
+    - default
+        - False
+    - description
+        - No description available
+    - required
+        - False
+    - type
+        - bool
+
+##### POWER_REDUNDANCY_MODE
+
+???+ "Details"
+
+    - choices
+        - ps-redundant
+        - combined
+        - insrc-redundant
+    - default
+        - ps-redundant
+    - description
+        - Default Power Supply Mode For Bootstrapped NX-OS Switches
+    - required
+        - False
+    - type
+        - str
+
+##### PTP_DOMAIN_ID
+
+???+ "Details"
+
+    - default
+        - 0
+    - description
+        - 'Multiple Independent PTP Clocking Subdomains on a Single Network '
+    - required
+        - False
+    - type
+        - int
+
+##### PTP_LB_ID
+
+???+ "Details"
+
+    - default
+        - 0
+    - description
+        - No description available
+    - required
+        - False
+    - type
+        - int
+
+##### SNMP_SERVER_HOST_TRAP
+
+???+ "Details"
+
+    - default
+        - True
+    - description
+        - Configure NDFC as a receiver for SNMP traps
+    - required
+        - False
+    - type
+        - bool
+
+##### SUBINTERFACE_RANGE
+
+???+ "Details"
+
+    - default
+        - 2-511
+    - description
+        - 'Per Border Dot1q Range For VRF Lite Connectivity '
+    - required
+        - False
+    - type
+        - str
+
+##### enableRealTimeBackup
+
+???+ "Details"
+
+    - default
+        - False
+    - description
+        - Backup hourly only if there is any config deployment since last backup
+    - required
+        - False
+    - type
+        - bool
+
+##### enableScheduledBackup
+
+???+ "Details"
+
+    - default
+        - False
+    - description
+        - Backup at the specified time
+    - required
+        - False
+    - type
+        - bool
+
+##### scheduledTime
+
+???+ "Details"
+
+    - default
+        - 
+    - description
+        - Time (UTC) in 24hr format. (00:00 to 23:59)
+    - required
+        - False
+    - type
+        - str
+
+#### VXLAN_EVPN_FABRIC_MSD_PARAMETERS
+
+???+ "Details"
+
+    - description
+        - VXLAN EVPN Multi-Site fabric specific parameters. 
+        - Domain that can contain multiple VXLAN EVPN Fabrics with Layer-2/Layer-3 Overlay Extensions and other Fabric Types. 
+        - The indentation of these parameters is meant only to logically group them. 
+        - They should be at the same YAML level as FABRIC_TYPE and FABRIC_NAME.
+
+##### ANYCAST_GW_MAC
+
+???+ "Details"
+
+    - default
+        - 2020.0000.00aa
+    - description
+        - Shared MAC address for all leaves
+    - required
+        - False
+    - type
+        - str
+
+##### BGP_RP_ASN
+
+???+ "Details"
+
+    - default
+        - 
+    - description
+        - 1-4294967295 | 1-65535.0-65535, e.g. 65000, 65001
+    - required
+        - False
+    - type
+        - str
+
+##### BGW_ROUTING_TAG
+
+???+ "Details"
+
+    - default
+        - 54321
+    - description
+        - Routing tag associated with IP address of loopback and DCI interfaces
+    - required
+        - False
+    - type
+        - int
+
+##### BORDER_GWY_CONNECTIONS
+
+???+ "Details"
+
+    - choices
+        - Manual
+        - Centralized_To_Route_Server
+        - Direct_To_BGWS
+    - default
+        - Manual
+    - description
+        - Manual, Auto Overlay EVPN Peering to Route Servers, Auto Overlay EVPN Direct Peering to Border Gateways
+    - required
+        - False
+    - type
+        - str
+
+##### CLOUDSEC_ALGORITHM
+
+???+ "Details"
+
+    - default
+        - AES_128_CMAC
+    - description
+        - AES_128_CMAC or AES_256_CMAC
+    - required
+        - False
+    - type
+        - str
+
+##### CLOUDSEC_AUTOCONFIG
+
+???+ "Details"
+
+    - default
+        - False
+    - description
+        - Auto Config CloudSec on Border Gateways
+    - required
+        - False
+    - type
+        - bool
+
+##### CLOUDSEC_ENFORCEMENT
+
+???+ "Details"
+
+    - default
+        - 
+    - description
+        - If set to strict, data across site must be encrypted.
+    - required
+        - False
+    - type
+        - str
+
+##### CLOUDSEC_KEY_STRING
+
+???+ "Details"
+
+    - default
+        - 
+    - description
+        - Cisco Type 7 Encrypted Octet String
+    - required
+        - False
+    - type
+        - str
+
+##### CLOUDSEC_REPORT_TIMER
+
+???+ "Details"
+
+    - default
+        - 5
+    - description
+        - CloudSec Operational Status periodic report timer in minutes
+    - required
+        - False
+    - type
+        - int
+
+##### DCI_SUBNET_RANGE
+
+???+ "Details"
+
+    - default
+        - 10.10.1.0/24
+    - description
+        - Address range to assign P2P DCI Links
+    - required
+        - False
+    - type
+        - str
+
+##### DCI_SUBNET_TARGET_MASK
+
+???+ "Details"
+
+    - default
+        - 30
+    - description
+        - 'Target Mask for Subnet Range '
+    - required
+        - False
+    - type
+        - int
+
+##### DELAY_RESTORE
+
+???+ "Details"
+
+    - default
+        - 300
+    - description
+        - Multi-Site underlay and overlay control plane convergence time  in seconds
+    - required
+        - False
+    - type
+        - int
+
+##### ENABLE_BGP_BFD
+
+???+ "Details"
+
+    - default
+        - False
+    - description
+        - For auto-created Multi-Site Underlay IFCs
+    - required
+        - False
+    - type
+        - bool
+
+##### ENABLE_BGP_LOG_NEIGHBOR_CHANGE
+
+???+ "Details"
+
+    - default
+        - False
+    - description
+        - For auto-created Multi-Site Underlay IFCs
+    - required
+        - False
+    - type
+        - bool
+
+##### ENABLE_BGP_SEND_COMM
+
+???+ "Details"
+
+    - default
+        - False
+    - description
+        - For auto-created Multi-Site Underlay IFCs
+    - required
+        - False
+    - type
+        - bool
+
+##### ENABLE_PVLAN
+
+???+ "Details"
+
+    - default
+        - False
+    - description
+        - Enable PVLAN on MSD and its child fabrics
+    - required
+        - False
+    - type
+        - bool
+
+##### ENABLE_RS_REDIST_DIRECT
+
+???+ "Details"
+
+    - default
+        - False
+    - description
+        - For auto-created Multi-Site overlay IFCs in Route Servers. Applicable only when Multi-Site Overlay IFC Deployment Method is Centralized_To_Route_Server.
+    - required
+        - False
+    - type
+        - bool
+
+##### FABRIC_NAME
+
+???+ "Details"
+
+    - default
+        - 
+    - description
+        - Please provide the fabric name to create it (Max Size 64)
+    - required
+        - False
+    - type
+        - str
+
+##### L2_SEGMENT_ID_RANGE
+
+???+ "Details"
+
+    - default
+        - 30000-49000
+    - description
+        - 'Overlay Network Identifier Range '
+    - required
+        - False
+    - type
+        - str
+
+##### L3_PARTITION_ID_RANGE
+
+???+ "Details"
+
+    - default
+        - 50000-59000
+    - description
+        - 'Overlay VRF Identifier Range '
+    - required
+        - False
+    - type
+        - str
+
+##### LOOPBACK100_IP_RANGE
+
+???+ "Details"
+
+    - default
+        - 10.10.0.0/24
+    - description
+        - Typically Loopback100 IP Address Range
+    - required
+        - False
+    - type
+        - str
+
+##### MS_IFC_BGP_AUTH_KEY_TYPE
+
+???+ "Details"
+
+    - choices
+        - 3
+        - 7
+    - default
+        - 3
+    - description
+        - BGP Key Encryption Type: 3 - 3DES, 7 - Cisco
+    - required
+        - False
+    - type
+        - int
+
+##### MS_IFC_BGP_PASSWORD
+
+???+ "Details"
+
+    - default
+        - 
+    - description
+        - Encrypted eBGP Password Hex String
+    - required
+        - False
+    - type
+        - str
+
+##### MS_IFC_BGP_PASSWORD_ENABLE
+
+???+ "Details"
+
+    - default
+        - False
+    - description
+        - eBGP password for Multi-Site underlay/overlay IFCs
+    - required
+        - False
+    - type
+        - bool
+
+##### MS_LOOPBACK_ID
+
+???+ "Details"
+
+    - default
+        - 100
+    - description
+        - No description available
+    - required
+        - False
+    - type
+        - int
+
+##### MS_UNDERLAY_AUTOCONFIG
+
+???+ "Details"
+
+    - default
+        - False
+    - description
+        - No description available
+    - required
+        - False
+    - type
+        - bool
+
+##### RP_SERVER_IP
+
+???+ "Details"
+
+    - default
+        - 
+    - description
+        - Multi-Site Route-Server peer list (typically loopback IP address on Route-Server for Multi-Site EVPN peering with BGWs), e.g. 128.89.0.1, 128.89.0.2
+    - required
+        - False
+    - type
+        - str
+
+##### RS_ROUTING_TAG
+
+???+ "Details"
+
+    - default
+        - 54321
+    - description
+        - Routing tag associated with Route Server IP for redistribute direct. This is the IP used in eBGP EVPN peering.
+    - required
+        - False
+    - type
+        - int
+
+##### TOR_AUTO_DEPLOY
+
+???+ "Details"
+
+    - default
+        - False
+    - description
+        - Enables Overlay VLANs on uplink between ToRs and Leafs
+    - required
+        - False
+    - type
+        - bool
+
+##### default_network
+
+???+ "Details"
+
+    - choices
+        - Default_Network_Universal
+        - Service_Network_Universal
+    - default
+        - Default_Network_Universal
+    - description
+        - Default Overlay Network Template For Leafs
+    - required
+        - False
+    - type
+        - str
+
+##### default_pvlan_sec_network
+
+???+ "Details"
+
+    - choices
+        - Pvlan_Secondary_Network
+    - default
+        - Pvlan_Secondary_Network
+    - description
+        - Default PVLAN Secondary Network Template
+    - required
+        - False
+    - type
+        - str
+
+##### default_vrf
+
+???+ "Details"
+
+    - choices
+        - Default_VRF_Universal
+    - default
+        - Default_VRF_Universal
+    - description
+        - Default Overlay VRF Template For Leafs
+    - required
+        - False
+    - type
+        - str
+
+##### enableScheduledBackup
+
+???+ "Details"
+
+    - default
+        - 
+    - description
+        - Backup at the specified time. Note: Fabric Backup/Restore functionality is being deprecated for MSD fabrics. Recommendation is to use NDFC Backup & Restore
+    - required
+        - False
+    - type
+        - bool
+
+##### network_extension_template
+
+???+ "Details"
+
+    - choices
+        - Default_Network_Extension_Universal
+    - default
+        - Default_Network_Extension_Universal
+    - description
+        - Default Overlay Network Template For Borders
+    - required
+        - False
+    - type
+        - str
+
+##### scheduledTime
+
+???+ "Details"
+
+    - default
+        - 
+    - description
+        - Time (UTC) in 24hr format. (00:00 to 23:59)
+    - required
+        - False
+    - type
+        - str
+
+##### vrf_extension_template
+
+???+ "Details"
+
+    - choices
+        - Default_VRF_Extension_Universal
+    - default
+        - Default_VRF_Extension_Universal
+    - description
+        - Default Overlay VRF Template For Borders
+    - required
+        - False
     - type
         - str
 
@@ -479,7 +2947,7 @@
 ???+ "Details"
 
     - default
-        - #Scope_Start_IP, Scope_End_IP, Scope_Default_Gateway, Scope_Subnet_Prefix
+        - Scope_Start_IP, Scope_End_IP, Scope_Default_Gateway, Scope_Subnet_Prefix
     - description
         - 'lines with
     - required
@@ -1563,12 +4031,12 @@
         - 
     - description
         - One or Multiple Netflow Exporters
+    - elements
+        - str
     - required
         - False
     - type
         - list
-    - elements
-        - str
 
 ##### NETFLOW_MONITOR_LIST
 
@@ -1578,12 +4046,12 @@
         - 
     - description
         - One or Multiple Netflow Monitors
+    - elements
+        - str
     - required
         - False
     - type
         - list
-    - elements
-        - str
 
 ##### NETFLOW_RECORD_LIST
 
@@ -1593,12 +4061,12 @@
         - 
     - description
         - One or Multiple Netflow Records
+    - elements
+        - str
     - required
         - False
     - type
         - list
-    - elements
-        - str
 
 ##### NETWORK_VLAN_RANGE
 
@@ -2591,2500 +5059,180 @@
         - False
     - type
         - str
-
-#### VXLAN_EVPN_FABRIC_MSD_PARAMETERS
-
-???+ "Details"
-
-    - description
-        - VXLAN EVPN Multi-Site fabric specific parameters. 
-        - Domain that can contain multiple VXLAN EVPN Fabrics with Layer-2/Layer-3 Overlay Extensions and other Fabric Types. 
-        - The indentation of these parameters is meant only to logically group them. 
-        - They should be at the same YAML level as FABRIC_TYPE and FABRIC_NAME.
-
-##### ANYCAST_GW_MAC
-
-???+ "Details"
-
-    - default
-        - 2020.0000.00aa
-    - description
-        - Shared MAC address for all leaves
-    - required
-        - False
-    - type
-        - str
-
-##### BGP_RP_ASN
-
-???+ "Details"
-
-    - default
-        - 
-    - description
-        - 1-4294967295 | 1-65535.0-65535, e.g. 65000, 65001
-    - required
-        - False
-    - type
-        - str
-
-##### BGW_ROUTING_TAG
-
-???+ "Details"
-
-    - default
-        - 54321
-    - description
-        - Routing tag associated with IP address of loopback and DCI interfaces
-    - required
-        - False
-    - type
-        - int
-
-##### BORDER_GWY_CONNECTIONS
-
-???+ "Details"
-
-    - choices
-        - Manual
-        - Centralized_To_Route_Server
-        - Direct_To_BGWS
-    - default
-        - Manual
-    - description
-        - Manual, Auto Overlay EVPN Peering to Route Servers, Auto Overlay EVPN Direct Peering to Border Gateways
-    - required
-        - False
-    - type
-        - str
-
-##### CLOUDSEC_ALGORITHM
-
-???+ "Details"
-
-    - default
-        - AES_128_CMAC
-    - description
-        - AES_128_CMAC or AES_256_CMAC
-    - required
-        - False
-    - type
-        - str
-
-##### CLOUDSEC_AUTOCONFIG
-
-???+ "Details"
-
-    - default
-        - False
-    - description
-        - Auto Config CloudSec on Border Gateways
-    - required
-        - False
-    - type
-        - bool
-
-##### CLOUDSEC_ENFORCEMENT
-
-???+ "Details"
-
-    - default
-        - 
-    - description
-        - If set to strict, data across site must be encrypted.
-    - required
-        - False
-    - type
-        - str
-
-##### CLOUDSEC_KEY_STRING
-
-???+ "Details"
-
-    - default
-        - 
-    - description
-        - Cisco Type 7 Encrypted Octet String
-    - required
-        - False
-    - type
-        - str
-
-##### CLOUDSEC_REPORT_TIMER
-
-???+ "Details"
-
-    - default
-        - 5
-    - description
-        - CloudSec Operational Status periodic report timer in minutes
-    - required
-        - False
-    - type
-        - int
-
-##### DCI_SUBNET_RANGE
-
-???+ "Details"
-
-    - default
-        - 10.10.1.0/24
-    - description
-        - Address range to assign P2P DCI Links
-    - required
-        - False
-    - type
-        - str
-
-##### DCI_SUBNET_TARGET_MASK
-
-???+ "Details"
-
-    - default
-        - 30
-    - description
-        - 'Target Mask for Subnet Range '
-    - required
-        - False
-    - type
-        - int
-
-##### DELAY_RESTORE
-
-???+ "Details"
-
-    - default
-        - 300
-    - description
-        - Multi-Site underlay and overlay control plane convergence time  in seconds
-    - required
-        - False
-    - type
-        - int
-
-##### ENABLE_BGP_BFD
-
-???+ "Details"
-
-    - default
-        - False
-    - description
-        - For auto-created Multi-Site Underlay IFCs
-    - required
-        - False
-    - type
-        - bool
-
-##### ENABLE_BGP_LOG_NEIGHBOR_CHANGE
-
-???+ "Details"
-
-    - default
-        - False
-    - description
-        - For auto-created Multi-Site Underlay IFCs
-    - required
-        - False
-    - type
-        - bool
-
-##### ENABLE_BGP_SEND_COMM
-
-???+ "Details"
-
-    - default
-        - False
-    - description
-        - For auto-created Multi-Site Underlay IFCs
-    - required
-        - False
-    - type
-        - bool
-
-##### ENABLE_PVLAN
-
-???+ "Details"
-
-    - default
-        - False
-    - description
-        - Enable PVLAN on MSD and its child fabrics
-    - required
-        - False
-    - type
-        - bool
-
-##### ENABLE_RS_REDIST_DIRECT
-
-???+ "Details"
-
-    - default
-        - False
-    - description
-        - For auto-created Multi-Site overlay IFCs in Route Servers. Applicable only when Multi-Site Overlay IFC Deployment Method is Centralized_To_Route_Server.
-    - required
-        - False
-    - type
-        - bool
-
-##### FABRIC_NAME
-
-???+ "Details"
-
-    - default
-        - 
-    - description
-        - Please provide the fabric name to create it (Max Size 64)
-    - required
-        - False
-    - type
-        - str
-
-##### L2_SEGMENT_ID_RANGE
-
-???+ "Details"
-
-    - default
-        - 30000-49000
-    - description
-        - 'Overlay Network Identifier Range '
-    - required
-        - False
-    - type
-        - str
-
-##### L3_PARTITION_ID_RANGE
-
-???+ "Details"
-
-    - default
-        - 50000-59000
-    - description
-        - 'Overlay VRF Identifier Range '
-    - required
-        - False
-    - type
-        - str
-
-##### LOOPBACK100_IP_RANGE
-
-???+ "Details"
-
-    - default
-        - 10.10.0.0/24
-    - description
-        - Typically Loopback100 IP Address Range
-    - required
-        - False
-    - type
-        - str
-
-##### MS_IFC_BGP_AUTH_KEY_TYPE
-
-???+ "Details"
-
-    - choices
-        - 3
-        - 7
-    - default
-        - 3
-    - description
-        - BGP Key Encryption Type: 3 - 3DES, 7 - Cisco
-    - required
-        - False
-    - type
-        - int
-
-##### MS_IFC_BGP_PASSWORD
-
-???+ "Details"
-
-    - default
-        - 
-    - description
-        - Encrypted eBGP Password Hex String
-    - required
-        - False
-    - type
-        - str
-
-##### MS_IFC_BGP_PASSWORD_ENABLE
-
-???+ "Details"
-
-    - default
-        - False
-    - description
-        - eBGP password for Multi-Site underlay/overlay IFCs
-    - required
-        - False
-    - type
-        - bool
-
-##### MS_LOOPBACK_ID
-
-???+ "Details"
-
-    - default
-        - 100
-    - description
-        - No description available
-    - required
-        - False
-    - type
-        - int
-
-##### MS_UNDERLAY_AUTOCONFIG
-
-???+ "Details"
-
-    - default
-        - False
-    - description
-        - No description available
-    - required
-        - False
-    - type
-        - bool
-
-##### RP_SERVER_IP
-
-???+ "Details"
-
-    - default
-        - 
-    - description
-        - Multi-Site Route-Server peer list (typically loopback IP address on Route-Server for Multi-Site EVPN peering with BGWs), e.g. 128.89.0.1, 128.89.0.2
-    - required
-        - False
-    - type
-        - str
-
-##### RS_ROUTING_TAG
-
-???+ "Details"
-
-    - default
-        - 54321
-    - description
-        - Routing tag associated with Route Server IP for redistribute direct. This is the IP used in eBGP EVPN peering.
-    - required
-        - False
-    - type
-        - int
-
-##### TOR_AUTO_DEPLOY
-
-???+ "Details"
-
-    - default
-        - False
-    - description
-        - Enables Overlay VLANs on uplink between ToRs and Leafs
-    - required
-        - False
-    - type
-        - bool
-
-##### default_network
-
-???+ "Details"
-
-    - choices
-        - Default_Network_Universal
-        - Service_Network_Universal
-    - default
-        - Default_Network_Universal
-    - description
-        - Default Overlay Network Template For Leafs
-    - required
-        - False
-    - type
-        - str
-
-##### default_pvlan_sec_network
-
-???+ "Details"
-
-    - choices
-        - Pvlan_Secondary_Network
-    - default
-        - Pvlan_Secondary_Network
-    - description
-        - Default PVLAN Secondary Network Template
-    - required
-        - False
-    - type
-        - str
-
-##### default_vrf
-
-???+ "Details"
-
-    - choices
-        - Default_VRF_Universal
-    - default
-        - Default_VRF_Universal
-    - description
-        - Default Overlay VRF Template For Leafs
-    - required
-        - False
-    - type
-        - str
-
-##### enableScheduledBackup
-
-???+ "Details"
-
-    - default
-        - 
-    - description
-        - Backup at the specified time. Note: Fabric Backup/Restore functionality is being deprecated for MSD fabrics. Recommendation is to use NDFC Backup & Restore
-    - required
-        - False
-    - type
-        - bool
-
-##### network_extension_template
-
-???+ "Details"
-
-    - choices
-        - Default_Network_Extension_Universal
-    - default
-        - Default_Network_Extension_Universal
-    - description
-        - Default Overlay Network Template For Borders
-    - required
-        - False
-    - type
-        - str
-
-##### scheduledTime
-
-???+ "Details"
-
-    - default
-        - 
-    - description
-        - Time (UTC) in 24hr format. (00:00 to 23:59)
-    - required
-        - False
-    - type
-        - str
-
-##### vrf_extension_template
-
-???+ "Details"
-
-    - choices
-        - Default_VRF_Extension_Universal
-    - default
-        - Default_VRF_Extension_Universal
-    - description
-        - Default Overlay VRF Template For Borders
-    - required
-        - False
-    - type
-        - str
-
-#### ISN_FABRIC_PARAMETERS
-
-???+ "Details"
-
-    - description
-        - ISN (Inter-site Network) fabric specific parameters. 
-        - Also known as Multi-Site External Network. 
-        - The following parameters are specific to ISN fabrics. 
-        - Network infrastructure attached to Border Gateways to interconnect VXLAN EVPN fabrics for Multi-Site and Multi-Cloud deployments. 
-        - The indentation of these parameters is meant only to logically group them. 
-        - They should be at the same YAML level as FABRIC_TYPE and FABRIC_NAME.
-
-##### AAA_REMOTE_IP_ENABLED
-
-???+ "Details"
-
-    - default
-        - False
-    - description
-        - Enable only, when IP Authorization is enabled in the AAA Server
-    - required
-        - False
-    - type
-        - bool
-
-##### AAA_SERVER_CONF
-
-???+ "Details"
-
-    - default
-        - 
-    - description
-        - AAA Configurations
-    - required
-        - False
-    - type
-        - str
-
-##### BGP_AS
-
-???+ "Details"
-
-    - default
-        - 
-    - description
-        - 1-4294967295 | 1-65535.0-65535 It is a good practice to have a unique ASN for each Fabric.
-    - required
-        - False
-    - type
-        - str
-
-##### BOOTSTRAP_CONF
-
-???+ "Details"
-
-    - default
-        - 
-    - description
-        - Additional CLIs required during device bootup/login e.g. AAA/Radius
-    - required
-        - False
-    - type
-        - str
-
-##### BOOTSTRAP_CONF_XE
-
-???+ "Details"
-
-    - default
-        - 
-    - description
-        - Additional CLIs required during device bootup/login e.g. AAA/Radius
-    - required
-        - False
-    - type
-        - str
-
-##### BOOTSTRAP_ENABLE
-
-???+ "Details"
-
-    - default
-        - False
-    - description
-        - Automatic IP Assignment For POAP
-    - required
-        - False
-    - type
-        - bool
-
-##### BOOTSTRAP_MULTISUBNET
-
-???+ "Details"
-
-    - default
-        - #Scope_Start_IP, Scope_End_IP, Scope_Default_Gateway, Scope_Subnet_Prefix
-    - description
-        - 'lines with
-    - required
-        - False
-    - type
-        - str
-
-##### CDP_ENABLE
-
-???+ "Details"
-
-    - default
-        - False
-    - description
-        - Enable CDP on management interface
-    - required
-        - False
-    - type
-        - bool
-
-##### DHCP_ENABLE
-
-???+ "Details"
-
-    - default
-        - False
-    - description
-        - Automatic IP Assignment For POAP From Local DHCP Server
-    - required
-        - False
-    - type
-        - bool
-
-##### DHCP_END
-
-???+ "Details"
-
-    - default
-        - 
-    - description
-        - End Address For Switch POAP
-    - required
-        - False
-    - type
-        - str
-
-##### DHCP_IPV6_ENABLE
-
-???+ "Details"
-
-    - choices
-        - DHCPv4
-        - DHCPv6
-    - default
-        - DHCPv4
-    - description
-        - No description available
-    - required
-        - False
-    - type
-        - str
-
-##### DHCP_START
-
-???+ "Details"
-
-    - default
-        - 
-    - description
-        - Start Address For Switch POAP
-    - required
-        - False
-    - type
-        - str
-
-##### DOMAIN_NAME
-
-???+ "Details"
-
-    - default
-        - 
-    - description
-        - Domain name for DHCP server PnP block
-    - required
-        - False
-    - type
-        - str
-
-##### ENABLE_AAA
-
-???+ "Details"
-
-    - default
-        - False
-    - description
-        - Include AAA configs from Advanced tab during device bootup
-    - required
-        - False
-    - type
-        - bool
-
-##### ENABLE_NETFLOW
-
-???+ "Details"
-
-    - default
-        - False
-    - description
-        - Enable Netflow on VTEPs
-    - required
-        - False
-    - type
-        - bool
-
-##### ENABLE_NXAPI
-
-???+ "Details"
-
-    - default
-        - False
-    - description
-        - Enable HTTPS NX-API
-    - required
-        - False
-    - type
-        - bool
-
-##### ENABLE_NXAPI_HTTP
-
-???+ "Details"
-
-    - default
-        - False
-    - description
-        - No description available
-    - required
-        - False
-    - type
-        - bool
-
-##### ENABLE_RT_INTF_STATS
-
-???+ "Details"
-
-    - default
-        - False
-    - description
-        - Valid for NX-OS only
-    - required
-        - False
-    - type
-        - bool
-
-##### FABRIC_FREEFORM
-
-???+ "Details"
-
-    - default
-        - 
-    - description
-        - Additional supported CLIs for all same OS (e.g. all NxOS or IOS-XE, etc) switches
-    - required
-        - False
-    - type
-        - str
-
-##### FABRIC_NAME
-
-???+ "Details"
-
-    - default
-        - 
-    - description
-        - Please provide the fabric name to create it (Max Size 64)
-    - required
-        - False
-    - type
-        - str
-
-##### FEATURE_PTP
-
-???+ "Details"
-
-    - default
-        - False
-    - description
-        - No description available
-    - required
-        - False
-    - type
-        - bool
-
-##### INBAND_ENABLE
-
-???+ "Details"
-
-    - default
-        - False
-    - description
-        - Enable POAP over Inband Interface (Pre-req: Inband Mgmt Knob should be Enabled)
-    - required
-        - False
-    - type
-        - bool
-
-##### INBAND_MGMT
-
-???+ "Details"
-
-    - default
-        - False
-    - description
-        - Import switches with inband connectivity
-    - required
-        - False
-    - type
-        - bool
-
-##### INTF_STAT_LOAD_INTERVAL
-
-???+ "Details"
-
-    - default
-        - 10
-    - description
-        - 'Time in seconds '
-    - required
-        - False
-    - type
-        - int
-
-##### IS_READ_ONLY
-
-???+ "Details"
-
-    - default
-        - True
-    - description
-        - If enabled, fabric is only monitored. No configuration will be deployed
-    - required
-        - False
-    - type
-        - bool
-
-##### MGMT_GW
-
-???+ "Details"
-
-    - default
-        - 
-    - description
-        - Default Gateway For Management VRF On The Switch
-    - required
-        - False
-    - type
-        - str
-
-##### MGMT_PREFIX
-
-???+ "Details"
-
-    - default
-        - 24
-    - description
-        - No description available
-    - required
-        - False
-    - type
-        - int
-
-##### MGMT_V6PREFIX
-
-???+ "Details"
-
-    - default
-        - 64
-    - description
-        - No description available
-    - required
-        - False
-    - type
-        - int
-
-##### MPLS_HANDOFF
-
-???+ "Details"
-
-    - default
-        - False
-    - description
-        - No description available
-    - required
-        - False
-    - type
-        - bool
-
-##### MPLS_LB_ID
-
-???+ "Details"
-
-    - default
-        - 101
-    - description
-        - No description available
-    - required
-        - False
-    - type
-        - int
-
-##### MPLS_LOOPBACK_IP_RANGE
-
-???+ "Details"
-
-    - default
-        - 10.102.0.0/25
-    - description
-        - MPLS Loopback IP Address Range
-    - required
-        - False
-    - type
-        - str
-
-##### NETFLOW_EXPORTER_LIST
-
-???+ "Details"
-
-    - default
-        - 
-    - description
-        - One or Multiple Netflow Exporters
-    - required
-        - False
     - type
         - list
-    - elements
-        - str
 
-##### NETFLOW_MONITOR_LIST
-
-???+ "Details"
-
-    - default
-        - 
-    - description
-        - One or Multiple Netflow Monitors
-    - required
-        - False
-    - type
-        - list
-    - elements
-        - str
-
-##### NETFLOW_RECORD_LIST
-
-???+ "Details"
-
-    - default
-        - 
-    - description
-        - One or Multiple Netflow Records
-    - required
-        - False
-    - type
-        - list
-    - elements
-        - str
-
-##### NETFLOW_SAMPLER_LIST
-
-???+ "Details"
-
-    - default
-        - 
-    - description
-        - One or multiple netflow samplers. Applicable to N7K only
-    - required
-        - False
-    - type
-        - list
-    - elements
-        - str
-
-##### NXAPI_HTTPS_PORT
-
-???+ "Details"
-
-    - default
-        - 443
-    - description
-        - No description available
-    - required
-        - False
-    - type
-        - int
-
-##### NXAPI_HTTP_PORT
-
-???+ "Details"
-
-    - default
-        - 80
-    - description
-        - No description available
-    - required
-        - False
-    - type
-        - int
-
-##### PM_ENABLE
+### skip_validation
 
 ???+ "Details"
 
     - default
         - False
     - description
-        - No description available
-    - required
-        - False
+        - Skip playbook parameter validation.  Useful for debugging.
     - type
         - bool
 
-##### PNP_ENABLE
-
-???+ "Details"
-
-    - default
-        - False
-    - description
-        - Enable Plug n Play (Automatic IP Assignment) for Cat9K switches
-    - required
-        - False
-    - type
-        - bool
-
-##### POWER_REDUNDANCY_MODE
+### state
 
 ???+ "Details"
 
     - choices
-        - ps-redundant
-        - combined
-        - insrc-redundant
+        - deleted
+        - merged
+        - query
+        - replaced
     - default
-        - ps-redundant
+        - merged
     - description
-        - Default Power Supply Mode For Bootstrapped NX-OS Switches
-    - required
-        - False
+        - The state of the feature or object after module completion
     - type
         - str
 
-##### PTP_DOMAIN_ID
-
-???+ "Details"
-
-    - default
-        - 0
-    - description
-        - 'Multiple Independent PTP Clocking Subdomains on a Single Network '
-    - required
-        - False
-    - type
-        - int
-
-##### PTP_LB_ID
-
-???+ "Details"
-
-    - default
-        - 0
-    - description
-        - No description available
-    - required
-        - False
-    - type
-        - int
-
-##### SNMP_SERVER_HOST_TRAP
-
-???+ "Details"
-
-    - default
-        - True
-    - description
-        - Configure NDFC as a receiver for SNMP traps
-    - required
-        - False
-    - type
-        - bool
-
-##### SUBINTERFACE_RANGE
-
-???+ "Details"
-
-    - default
-        - 2-511
-    - description
-        - 'Per Border Dot1q Range For VRF Lite Connectivity '
-    - required
-        - False
-    - type
-        - str
-
-##### enableRealTimeBackup
-
-???+ "Details"
-
-    - default
-        - 
-    - description
-        - Backup hourly only if there is any config deployment since last backup
-    - required
-        - False
-    - type
-        - bool
-
-##### enableScheduledBackup
-
-???+ "Details"
-
-    - default
-        - 
-    - description
-        - Backup at the specified time
-    - required
-        - False
-    - type
-        - bool
-
-##### scheduledTime
-
-???+ "Details"
-
-    - default
-        - 
-    - description
-        - Time (UTC) in 24hr format. (00:00 to 23:59)
-    - required
-        - False
-    - type
-        - str
-
-#### IPFM_FABRIC_PARAMETERS
-
-???+ "Details"
-
-    - description
-        - IPFM (IP Fabric for Media) fabric specific parameters. 
-        - The following parameters are specific to IPFM fabrics. 
-        - Fabric for a fully automated deployment of IP Fabric for Media Network with Nexus 9000 switches. 
-        - The indentation of these parameters is meant only to logically group them. 
-        - They should be at the same YAML level as FABRIC_TYPE and FABRIC_NAME.
-
-##### AAA_REMOTE_IP_ENABLED
-
-???+ "Details"
-
-    - default
-        - False
-    - description
-        - Enable only, when IP Authorization is enabled in the AAA Server
-    - required
-        - False
-    - type
-        - bool
-
-##### AAA_SERVER_CONF
-
-???+ "Details"
-
-    - default
-        - 
-    - description
-        - AAA Configurations
-    - required
-        - False
-    - type
-        - str
-
-##### ASM_GROUP_RANGES
-
-???+ "Details"
-
-    - default
-        - 
-    - description
-        - ASM group ranges with prefixes (len:4-32) example: 239.1.1.0/25, max 20 ranges. Enabling SPT-Threshold Infinity to prevent switchover to source-tree.
-    - required
-        - False
-    - type
-        - list
-    - elements
-        - str
-
-##### BOOTSTRAP_CONF
-
-???+ "Details"
-
-    - default
-        - 
-    - description
-        - Additional CLIs required during device bootup/login e.g. AAA/Radius
-    - required
-        - False
-    - type
-        - str
-
-##### BOOTSTRAP_ENABLE
-
-???+ "Details"
-
-    - default
-        - False
-    - description
-        - Automatic IP Assignment For POAP
-    - required
-        - False
-    - type
-        - bool
-
-##### BOOTSTRAP_MULTISUBNET
-
-???+ "Details"
-
-    - default
-        - #Scope_Start_IP, Scope_End_IP, Scope_Default_Gateway, Scope_Subnet_Prefix
-    - description
-        - 'lines with
-    - required
-        - False
-    - type
-        - str
-
-##### CDP_ENABLE
-
-???+ "Details"
-
-    - default
-        - False
-    - description
-        - Enable CDP on management interface
-    - required
-        - False
-    - type
-        - bool
-
-##### DHCP_ENABLE
-
-???+ "Details"
-
-    - default
-        - False
-    - description
-        - Automatic IP Assignment For POAP From Local DHCP Server
-    - required
-        - False
-    - type
-        - bool
-
-##### DHCP_END
-
-???+ "Details"
-
-    - default
-        - 
-    - description
-        - End Address For Switch Out-of-Band POAP
-    - required
-        - False
-    - type
-        - str
-
-##### DHCP_IPV6_ENABLE
-
-???+ "Details"
-
-    - choices
-        - DHCPv4
-    - default
-        - DHCPv4
-    - description
-        - No description available
-    - required
-        - False
-    - type
-        - str
-
-##### DHCP_START
-
-???+ "Details"
-
-    - default
-        - 
-    - description
-        - Start Address For Switch Out-of-Band POAP
-    - required
-        - False
-    - type
-        - str
-
-##### DNS_SERVER_IP_LIST
-
-???+ "Details"
-
-    - default
-        - 
-    - description
-        - Comma separated list of IP Addresses (v4/v6)
-    - required
-        - False
-    - type
-        - str
-
-##### DNS_SERVER_VRF
-
-???+ "Details"
-
-    - default
-        - 
-    - description
-        - One VRF for all DNS servers or a comma separated list of VRFs, one per DNS server
-    - required
-        - False
-    - type
-        - str
-
-##### ENABLE_AAA
-
-???+ "Details"
-
-    - default
-        - False
-    - description
-        - Include AAA configs from Manageability tab during device bootup
-    - required
-        - False
-    - type
-        - bool
-
-##### ENABLE_ASM
-
-???+ "Details"
-
-    - default
-        - False
-    - description
-        - Enable groups with receivers sending (*,G) joins
-    - required
-        - False
-    - type
-        - bool
-
-##### ENABLE_NBM_PASSIVE
-
-???+ "Details"
-
-    - default
-        - False
-    - description
-        - Enable NBM mode to pim-passive for default VRF
-    - required
-        - False
-    - type
-        - bool
-
-##### EXTRA_CONF_INTRA_LINKS
-
-???+ "Details"
-
-    - default
-        - 
-    - description
-        - Additional CLIs For All Intra-Fabric Links
-    - required
-        - False
-    - type
-        - str
-
-##### EXTRA_CONF_LEAF
-
-???+ "Details"
-
-    - default
-        - 
-    - description
-        - Additional CLIs For All Leafs and Tier2 Leafs As Captured From Show Running Configuration
-    - required
-        - False
-    - type
-        - str
-
-##### EXTRA_CONF_SPINE
-
-???+ "Details"
-
-    - default
-        - 
-    - description
-        - Additional CLIs For All Spines As Captured From Show Running Configuration
-    - required
-        - False
-    - type
-        - str
-
-##### FABRIC_INTERFACE_TYPE
-
-???+ "Details"
-
-    - choices
-        - p2p
-    - default
-        - p2p
-    - description
-        - Only Numbered(Point-to-Point) is supported
-    - required
-        - False
-    - type
-        - str
-
-##### FABRIC_MTU
-
-???+ "Details"
-
-    - default
-        - 9216
-    - description
-        - . Must be an even number
-    - required
-        - False
-    - type
-        - int
-
-##### FABRIC_NAME
-
-???+ "Details"
-
-    - default
-        - 
-    - description
-        - Name of the fabric (Max Size 64)
-    - required
-        - False
-    - type
-        - str
-
-##### FEATURE_PTP
-
-???+ "Details"
-
-    - default
-        - False
-    - description
-        - No description available
-    - required
-        - False
-    - type
-        - bool
-
-##### ISIS_AUTH_ENABLE
-
-???+ "Details"
-
-    - default
-        - False
-    - description
-        - No description available
-    - required
-        - False
-    - type
-        - bool
-
-##### ISIS_AUTH_KEY
-
-???+ "Details"
-
-    - default
-        - 
-    - description
-        - Cisco Type 7 Encrypted
-    - required
-        - False
-    - type
-        - str
-
-##### ISIS_AUTH_KEYCHAIN_KEY_ID
-
-???+ "Details"
-
-    - default
-        - 127
-    - description
-        - No description available
-    - required
-        - False
-    - type
-        - int
-
-##### ISIS_AUTH_KEYCHAIN_NAME
-
-???+ "Details"
-
-    - default
-        - 
-    - description
-        - No description available
-    - required
-        - False
-    - type
-        - str
-
-##### ISIS_LEVEL
-
-???+ "Details"
-
-    - choices
-        - level-1
-        - level-2
-    - default
-        - level-2
-    - description
-        - Supported IS types: level-1, level-2
-    - required
-        - False
-    - type
-        - str
-
-##### ISIS_P2P_ENABLE
-
-???+ "Details"
-
-    - default
-        - True
-    - description
-        - This will enable network point-to-point on fabric interfaces which are numbered
-    - required
-        - False
-    - type
-        - bool
-
-##### L2_HOST_INTF_MTU
-
-???+ "Details"
-
-    - default
-        - 9216
-    - description
-        - . Must be an even number
-    - required
-        - False
-    - type
-        - int
-
-##### LINK_STATE_ROUTING
-
-???+ "Details"
-
-    - choices
-        - ospf
-        - is-is
-    - default
-        - ospf
-    - description
-        - Used for Spine-Leaf Connectivity
-    - required
-        - False
-    - type
-        - str
-
-##### LINK_STATE_ROUTING_TAG
-
-???+ "Details"
-
-    - default
-        - 1
-    - description
-        - Routing process tag for the fabric
-    - required
-        - False
-    - type
-        - str
-
-##### LOOPBACK0_IP_RANGE
-
-???+ "Details"
-
-    - default
-        - 10.2.0.0/22
-    - description
-        - Routing Loopback IP Address Range
-    - required
-        - False
-    - type
-        - str
-
-##### MGMT_GW
-
-???+ "Details"
-
-    - default
-        - 
-    - description
-        - Default Gateway For Management VRF On The Switch
-    - required
-        - False
-    - type
-        - str
-
-##### MGMT_PREFIX
-
-???+ "Details"
-
-    - default
-        - 24
-    - description
-        - No description available
-    - required
-        - False
-    - type
-        - int
-
-##### NTP_SERVER_IP_LIST
-
-???+ "Details"
-
-    - default
-        - 
-    - description
-        - Comma separated list of IP Addresses (v4/v6)
-    - required
-        - False
-    - type
-        - str
-
-##### NTP_SERVER_VRF
-
-???+ "Details"
-
-    - default
-        - 
-    - description
-        - One VRF for all NTP servers or a comma separated list of VRFs, one per NTP server
-    - required
-        - False
-    - type
-        - str
-
-##### NXAPI_VRF
-
-???+ "Details"
-
-    - choices
-        - management
-        - default
-    - default
-        - management
-    - description
-        - VRF used for NX-API communication
-    - required
-        - False
-    - type
-        - str
-
-##### OSPF_AREA_ID
-
-???+ "Details"
-
-    - default
-        - 0.0.0.0
-    - description
-        - OSPF Area Id in IP address format
-    - required
-        - False
-    - type
-        - str
-
-##### OSPF_AUTH_ENABLE
-
-???+ "Details"
-
-    - default
-        - False
-    - description
-        - No description available
-    - required
-        - False
-    - type
-        - bool
-
-##### OSPF_AUTH_KEY
-
-???+ "Details"
-
-    - default
-        - 
-    - description
-        - 3DES Encrypted
-    - required
-        - False
-    - type
-        - str
-
-##### OSPF_AUTH_KEY_ID
-
-???+ "Details"
-
-    - default
-        - 127
-    - description
-        - No description available
-    - required
-        - False
-    - type
-        - int
-
-##### PIM_HELLO_AUTH_ENABLE
-
-???+ "Details"
-
-    - default
-        - False
-    - description
-        - No description available
-    - required
-        - False
-    - type
-        - bool
-
-##### PIM_HELLO_AUTH_KEY
-
-???+ "Details"
-
-    - default
-        - 
-    - description
-        - 3DES Encrypted
-    - required
-        - False
-    - type
-        - str
-
-##### PM_ENABLE
-
-???+ "Details"
-
-    - default
-        - False
-    - description
-        - No description available
-    - required
-        - False
-    - type
-        - bool
-
-##### POWER_REDUNDANCY_MODE
-
-???+ "Details"
-
-    - choices
-        - ps-redundant
-        - combined
-        - insrc-redundant
-    - default
-        - ps-redundant
-    - description
-        - Default power supply mode for the fabric
-    - required
-        - False
-    - type
-        - str
-
-##### PTP_DOMAIN_ID
-
-???+ "Details"
-
-    - default
-        - 0
-    - description
-        - 'Multiple Independent PTP Clocking Subdomains on a Single Network '
-    - required
-        - False
-    - type
-        - int
-
-##### PTP_LB_ID
-
-???+ "Details"
-
-    - default
-        - 0
-    - description
-        - No description available
-    - required
-        - False
-    - type
-        - int
-
-##### PTP_PROFILE
-
-???+ "Details"
-
-    - choices
-        - IEEE-1588v2
-        - SMPTE-2059-2
-        - AES67-2015
-    - default
-        - SMPTE-2059-2
-    - description
-        - Enabled on ISL links only
-    - required
-        - False
-    - type
-        - str
-
-##### ROUTING_LB_ID
-
-???+ "Details"
-
-    - default
-        - 0
-    - description
-        - No description available
-    - required
-        - False
-    - type
-        - int
-
-##### RP_IP_RANGE
-
-???+ "Details"
-
-    - default
-        - 10.254.254.0/24
-    - description
-        - RP Loopback IP Address Range
-    - required
-        - False
-    - type
-        - str
-
-##### RP_LB_ID
-
-???+ "Details"
-
-    - default
-        - 254
-    - description
-        - No description available
-    - required
-        - False
-    - type
-        - int
-
-##### SNMP_SERVER_HOST_TRAP
-
-???+ "Details"
-
-    - default
-        - True
-    - description
-        - Configure NDFC as a receiver for SNMP traps
-    - required
-        - False
-    - type
-        - bool
-
-##### STATIC_UNDERLAY_IP_ALLOC
-
-???+ "Details"
-
-    - default
-        - False
-    - description
-        - Checking this will disable Dynamic Fabric IP Address Allocations
-    - required
-        - False
-    - type
-        - bool
-
-##### SUBNET_RANGE
-
-???+ "Details"
-
-    - default
-        - 10.4.0.0/16
-    - description
-        - Address range to assign Numbered IPs
-    - required
-        - False
-    - type
-        - str
-
-##### SUBNET_TARGET_MASK
-
-???+ "Details"
-
-    - choices
-        - 30
-        - 31
-    - default
-        - 30
-    - description
-        - Mask for Fabric Subnet IP Range
-    - required
-        - False
-    - type
-        - int
-
-##### SYSLOG_SERVER_IP_LIST
-
-???+ "Details"
-
-    - default
-        - 
-    - description
-        - Comma separated list of IP Addresses (v4/v6)
-    - required
-        - False
-    - type
-        - str
-
-##### SYSLOG_SERVER_VRF
-
-???+ "Details"
-
-    - default
-        - 
-    - description
-        - One VRF for all Syslog servers or a comma separated list of VRFs, one per Syslog server
-    - required
-        - False
-    - type
-        - str
-
-##### SYSLOG_SEV
-
-???+ "Details"
-
-    - default
-        - 
-    - description
-        - 'Comma separated list of Syslog severity values, one per Syslog server '
-    - required
-        - False
-    - type
-        - str
-
-#### LAN_CLASSIC_FABRIC_PARAMETERS
-
-???+ "Details"
-
-    - description
-        - LAN Classic fabric specific parameters. 
-        - The following parameters are specific to Classic LAN fabrics. 
-        - Fabric to manage a legacy Classic LAN deployment with Nexus switches. 
-        - The indentation of these parameters is meant only to logically group them. 
-        - They should be at the same YAML level as FABRIC_TYPE and FABRIC_NAME.
-
-##### AAA_REMOTE_IP_ENABLED
-
-???+ "Details"
-
-    - default
-        - False
-    - description
-        - Enable only, when IP Authorization is enabled in the AAA Server
-    - required
-        - False
-    - type
-        - bool
-
-##### AAA_SERVER_CONF
-
-???+ "Details"
-
-    - default
-        - 
-    - description
-        - AAA Configurations
-    - required
-        - False
-    - type
-        - str
-
-##### BOOTSTRAP_CONF
-
-???+ "Details"
-
-    - default
-        - 
-    - description
-        - Additional CLIs required during device bootup/login e.g. AAA/Radius
-    - required
-        - False
-    - type
-        - str
-
-##### BOOTSTRAP_ENABLE
-
-???+ "Details"
-
-    - default
-        - False
-    - description
-        - Automatic IP Assignment For POAP
-    - required
-        - False
-    - type
-        - bool
-
-##### BOOTSTRAP_MULTISUBNET
-
-???+ "Details"
-
-    - default
-        - #Scope_Start_IP, Scope_End_IP, Scope_Default_Gateway, Scope_Subnet_Prefix
-    - description
-        - 'lines with
-    - required
-        - False
-    - type
-        - str
-
-##### CDP_ENABLE
-
-???+ "Details"
-
-    - default
-        - False
-    - description
-        - Enable CDP on management interface
-    - required
-        - False
-    - type
-        - bool
-
-##### DHCP_ENABLE
-
-???+ "Details"
-
-    - default
-        - False
-    - description
-        - Automatic IP Assignment For POAP From Local DHCP Server
-    - required
-        - False
-    - type
-        - bool
-
-##### DHCP_END
-
-???+ "Details"
-
-    - default
-        - 
-    - description
-        - End Address For Switch POAP
-    - required
-        - False
-    - type
-        - str
-
-##### DHCP_IPV6_ENABLE
-
-???+ "Details"
-
-    - choices
-        - DHCPv4
-        - DHCPv6
-    - default
-        - DHCPv4
-    - description
-        - No description available
-    - required
-        - False
-    - type
-        - str
-
-##### DHCP_START
-
-???+ "Details"
-
-    - default
-        - 
-    - description
-        - Start Address For Switch POAP
-    - required
-        - False
-    - type
-        - str
-
-##### ENABLE_AAA
-
-???+ "Details"
-
-    - default
-        - False
-    - description
-        - Include AAA configs from Advanced tab during device bootup
-    - required
-        - False
-    - type
-        - bool
-
-##### ENABLE_NETFLOW
-
-???+ "Details"
-
-    - default
-        - False
-    - description
-        - Enable Netflow on VTEPs
-    - required
-        - False
-    - type
-        - bool
-
-##### ENABLE_NXAPI
-
-???+ "Details"
-
-    - default
-        - False
-    - description
-        - Enable HTTPS NX-API
-    - required
-        - False
-    - type
-        - bool
-
-##### ENABLE_NXAPI_HTTP
-
-???+ "Details"
-
-    - default
-        - False
-    - description
-        - No description available
-    - required
-        - False
-    - type
-        - bool
-
-##### FABRIC_FREEFORM
-
-???+ "Details"
-
-    - default
-        - 
-    - description
-        - Additional supported CLIs for all same OS (e.g. all NxOS etc) switches
-    - required
-        - False
-    - type
-        - str
-
-##### FABRIC_NAME
-
-???+ "Details"
-
-    - default
-        - 
-    - description
-        - Please provide the fabric name to create it (Max Size 64)
-    - required
-        - False
-    - type
-        - str
-
-##### FEATURE_PTP
-
-???+ "Details"
-
-    - default
-        - False
-    - description
-        - No description available
-    - required
-        - False
-    - type
-        - bool
-
-##### INBAND_ENABLE
-
-???+ "Details"
-
-    - default
-        - False
-    - description
-        - Enable POAP over Inband Interface (Pre-req: Inband Mgmt Knob should be Enabled)
-    - required
-        - False
-    - type
-        - bool
-
-##### INBAND_MGMT
-
-???+ "Details"
-
-    - default
-        - False
-    - description
-        - Import switches with inband connectivity
-    - required
-        - False
-    - type
-        - bool
-
-##### IS_READ_ONLY
-
-???+ "Details"
-
-    - default
-        - True
-    - description
-        - If enabled, fabric is only monitored. No configuration will be deployed
-    - required
-        - False
-    - type
-        - bool
-
-##### MGMT_GW
-
-???+ "Details"
-
-    - default
-        - 
-    - description
-        - Default Gateway For Management VRF On The Switch
-    - required
-        - False
-    - type
-        - str
-
-##### MGMT_PREFIX
-
-???+ "Details"
-
-    - default
-        - 24
-    - description
-        - No description available
-    - required
-        - False
-    - type
-        - int
-
-##### MGMT_V6PREFIX
-
-???+ "Details"
-
-    - default
-        - 64
-    - description
-        - No description available
-    - required
-        - False
-    - type
-        - int
-
-##### MPLS_HANDOFF
-
-???+ "Details"
-
-    - default
-        - False
-    - description
-        - No description available
-    - required
-        - False
-    - type
-        - bool
-
-##### MPLS_LB_ID
-
-???+ "Details"
-
-    - default
-        - 101
-    - description
-        - No description available
-    - required
-        - False
-    - type
-        - int
-
-##### MPLS_LOOPBACK_IP_RANGE
-
-???+ "Details"
-
-    - default
-        - 10.102.0.0/25
-    - description
-        - MPLS Loopback IP Address Range
-    - required
-        - False
-    - type
-        - str
-
-##### NETFLOW_EXPORTER_LIST
-
-???+ "Details"
-
-    - default
-        - 
-    - description
-        - One or Multiple Netflow Exporters
-    - required
-        - False
-    - type
-        - list
-    - elements
-        - str
-
-##### NETFLOW_MONITOR_LIST
-
-???+ "Details"
-
-    - default
-        - 
-    - description
-        - One or Multiple Netflow Monitors
-    - required
-        - False
-    - type
-        - list
-    - elements
-        - str
-
-##### NETFLOW_RECORD_LIST
-
-???+ "Details"
-
-    - default
-        - 
-    - description
-        - One or Multiple Netflow Records
-    - required
-        - False
-    - type
-        - list
-    - elements
-        - str
-
-##### NETFLOW_SAMPLER_LIST
-
-???+ "Details"
-
-    - default
-        - 
-    - description
-        - One or multiple netflow Samplers. Applicable to N7K only
-    - required
-        - False
-    - type
-        - list
-    - elements
-        - str
-
-##### NXAPI_HTTPS_PORT
-
-???+ "Details"
-
-    - default
-        - 443
-    - description
-        - No description available
-    - required
-        - False
-    - type
-        - int
-
-##### NXAPI_HTTP_PORT
-
-???+ "Details"
-
-    - default
-        - 80
-    - description
-        - No description available
-    - required
-        - False
-    - type
-        - int
-
-##### PM_ENABLE
-
-???+ "Details"
-
-    - default
-        - False
-    - description
-        - No description available
-    - required
-        - False
-    - type
-        - bool
-
-##### POWER_REDUNDANCY_MODE
-
-???+ "Details"
-
-    - choices
-        - ps-redundant
-        - combined
-        - insrc-redundant
-    - default
-        - ps-redundant
-    - description
-        - Default Power Supply Mode For Bootstrapped NX-OS Switches
-    - required
-        - False
-    - type
-        - str
-
-##### PTP_DOMAIN_ID
-
-???+ "Details"
-
-    - default
-        - 0
-    - description
-        - 'Multiple Independent PTP Clocking Subdomains on a Single Network '
-    - required
-        - False
-    - type
-        - int
-
-##### PTP_LB_ID
-
-???+ "Details"
-
-    - default
-        - 0
-    - description
-        - No description available
-    - required
-        - False
-    - type
-        - int
-
-##### SNMP_SERVER_HOST_TRAP
-
-???+ "Details"
-
-    - default
-        - True
-    - description
-        - Configure NDFC as a receiver for SNMP traps
-    - required
-        - False
-    - type
-        - bool
-
-##### SUBINTERFACE_RANGE
-
-???+ "Details"
-
-    - default
-        - 2-511
-    - description
-        - 'Per Border Dot1q Range For VRF Lite Connectivity '
-    - required
-        - False
-    - type
-        - str
-
-##### enableRealTimeBackup
-
-???+ "Details"
-
-    - default
-        - False
-    - description
-        - Backup hourly only if there is any config deployment since last backup
-    - required
-        - False
-    - type
-        - bool
-
-##### enableScheduledBackup
-
-???+ "Details"
-
-    - default
-        - False
-    - description
-        - Backup at the specified time
-    - required
-        - False
-    - type
-        - bool
-
-##### scheduledTime
-
-???+ "Details"
-
-    - default
-        - 
-    - description
-        - Time (UTC) in 24hr format. (00:00 to 23:59)
-    - required
-        - False
-    - type
-        - str
+## Examples
+
+???+ "Details"
+
+``` yaml
+---
+
+# Create the following fabrics with default configuration values
+# if they don't already exist.  If they exist, the playbook will
+# exit without doing anything.
+# - 1. VXLAN EVPN fabric
+# - 1. VXLAN EVPN Multi-Site fabric
+# - 1. LAN Classic fabric
+
+- name: Create fabrics
+  cisco.dcnm.dcnm_fabric:
+    state: merged
+    config:
+    -   FABRIC_NAME: VXLAN_Fabric
+        FABRIC_TYPE: VXLAN_EVPN
+        BGP_AS: 65000
+    -   FABRIC_NAME: MSD_Fabric
+        FABRIC_TYPE: VXLAN_EVPN_MSD
+    -   FABRIC_NAME: LAN_Fabric
+        FABRIC_TYPE: LAN_CLASSIC
+  register: result
+- debug:
+    var: result
+
+# Update the above fabrics with additional configurations.
+
+- name: Update fabrics
+  cisco.dcnm.dcnm_fabric:
+    state: merged
+    config:
+    -   FABRIC_NAME: VXLAN_Fabric
+        FABRIC_TYPE: VXLAN_EVPN
+        BGP_AS: 65000
+        ANYCAST_GW_MAC: 0001.aabb.ccdd
+        UNDERLAY_IS_V6: false
+        EXTRA_CONF_LEAF: |
+          interface Ethernet1/1-16
+            description managed by NDFC
+        DEPLOY: false
+    -   FABRIC_NAME: MSD_Fabric
+        FABRIC_TYPE: VXLAN_EVPN_MSD
+        LOOPBACK100_IP_RANGE: 10.22.0.0/24
+        DEPLOY: false
+    -   FABRIC_NAME: LAN_Fabric
+        FABRIC_TYPE: LAN_CLASSIC
+        BOOTSTRAP_ENABLE: false
+        IS_READ_ONLY: false
+        DEPLOY: false
+  register: result
+- debug:
+    var: result
+
+# Setting skip_validation to True to bypass parameter validation in the module.
+# Note, this does not bypass parameter validation in NDFC.  skip_validation
+# can be useful to verify that the dcnm_fabric module's parameter validation
+# is disallowing parameter combinations that would also be disallowed by
+# NDFC.
+
+- name: Update fabrics
+  cisco.dcnm.dcnm_fabric:
+    state: merged
+    skip_validation: True
+    config:
+    -   FABRIC_NAME: VXLAN_Fabric
+        FABRIC_TYPE: VXLAN_EVPN
+        BGP_AS: 65000
+        ANYCAST_GW_MAC: 0001.aabb.ccdd
+        UNDERLAY_IS_V6: false
+        EXTRA_CONF_LEAF: |
+          interface Ethernet1/1-16
+            description managed by NDFC
+        DEPLOY: false
+
+# Use replaced state to return the fabrics to their default configurations.
+
+- name: Return fabrics to default configuration.
+  cisco.dcnm.dcnm_fabric:
+    state: replaced
+    config:
+    -   FABRIC_NAME: VXLAN_Fabric
+        FABRIC_TYPE: VXLAN_EVPN
+        BGP_AS: 65000
+        DEPLOY: false
+    -   FABRIC_NAME: MSD_Fabric
+        FABRIC_TYPE: VXLAN_EVPN_MSD
+        DEPLOY: false
+    -   FABRIC_NAME: LAN_Fabric
+        FABRIC_TYPE: LAN_CLASSIC
+        DEPLOY: false
+  register: result
+- debug:
+    var: result
+
+# Query the fabrics to get their current configurations.
+
+- name: Query the fabrics.
+  cisco.dcnm.dcnm_fabric:
+    state: query
+    config:
+    -   FABRIC_NAME: VXLAN_Fabric
+    -   FABRIC_NAME: MSD_Fabric
+    -   FABRIC_NAME: LAN_Fabric
+  register: result
+- debug:
+    var: result
+
+# Delete the fabrics.
+
+- name: Delete the fabrics.
+  cisco.dcnm.dcnm_fabric:
+    state: deleted
+    config:
+    -   FABRIC_NAME: VXLAN_Fabric
+    -   FABRIC_NAME: MSD_Fabric
+    -   FABRIC_NAME: LAN_Fabric
+  register: result
+- debug:
+    var: result
+
+# When skip_validation is False (the default), some error messages might be
+# misleading.  For example, with the playbook below, the error message
+# that follows should be interpreted as "ENABLE_PVLAN is mutually-exclusive
+# to ENABLE_SGT and should be removed from the playbook if ENABLE_SGT is set
+# to True."  In the NDFC GUI, if Security Groups is enabled, NDFC disables
+# the ability to modify the PVLAN option.  Hence, even a valid value for
+# ENABLE_PVLAN in the playbook will generate an error.
+
+-   name: merge fabric MyFabric
+    cisco.dcnm.dcnm_fabric:
+        state: merged
+        skip_validation: false
+        config:
+        -   FABRIC_NAME: MyFabric
+            FABRIC_TYPE: VXLAN_EVPN
+            BGP_AS: 65001
+            ENABLE_SGT: true
+            ENABLE_PVLAN: false
+
+# Resulting error message (edited for brevity)
+# "The following parameter(value) combination(s) are invalid and need to be reviewed: Fabric: f3, ENABLE_PVLAN(False) requires ENABLE_SGT != True."
+
+```

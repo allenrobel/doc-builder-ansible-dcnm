@@ -133,7 +133,7 @@ options:
             type: list
             elements: str
             default: []
-          description1:
+          description:
             description:
             - Description of the interface
             type: str
@@ -317,7 +317,7 @@ options:
             type: list
             elements: str
             default: []
-          description1:
+          description:
             description:
             - Description of the interface
             type: str
@@ -378,7 +378,7 @@ options:
             type: list
             elements: str
             default: []
-          description1:
+          description:
             description:
             - Description of the interface
             type: str
@@ -479,7 +479,7 @@ options:
             type: list
             elements: str
             default: []
-          description1:
+          description:
             description:
             - Description of the interface
             type: str
@@ -523,7 +523,7 @@ options:
             type: list
             elements: str
             default: []
-          description1:
+          description:
             description:
             - Description of the interface.
             type: str
@@ -659,7 +659,7 @@ options:
             type: list
             elements: str
             default: []
-          description1:
+          description:
             description:
             - Description of the FEX interface
             type: str
@@ -691,7 +691,7 @@ options:
           objects applicable for this profile
         - Object profile which must be included for active-active FEX inetrface configurations.
         suboptions:
-          description1:
+          description:
             description:
             - Description of the FEX interface
             type: str
@@ -757,3 +757,4 @@ options:
             - Name of netflow monitor. This parameter is required if "enable_netflow" is True.
             type: str
             default: ""
+

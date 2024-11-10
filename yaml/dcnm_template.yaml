@@ -29,7 +29,7 @@ options:
         - Name of the template.
         type: str
 
-      description1:
+      description:
         description:
         - Description of the template. The description may include the details
           regarding the content
