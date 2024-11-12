@@ -1,4 +1,5 @@
 #!/usr/bin/env python
+import json
 import re
 import sys
 import yaml
@@ -71,7 +72,7 @@ def fix_descriptions(content):
 
     For example:
 
-    description: |
+    description:
         - This is a description
         - that spans multiple lines.
     
@@ -79,6 +80,7 @@ def fix_descriptions(content):
 
     description: This is a description that spans multiple lines.
     """
+    # first pass, remove '-' character from description lines
     re_description = re.compile(r"^\s*description:")
     description = ""
     gobble = False
@@ -105,7 +107,24 @@ def fix_descriptions(content):
         line = re.sub("- ", "ESC_HYPHEN", line)
         description += line.strip() + " "
         # print(f"Gobbled into description {description}")
-    return new_content
+
+    # second pass, replace ^.*description:.*description:.*$ with
+    # .*ESC_DESCRIPTION:
+    #     description:.*
+    re_description = re.compile(r"^(.*)(description:)(.*)(description:.*)$")
+    final_content = ""
+    for line in new_content.split("\n"):
+        m = re_description.match(line)
+        if m:
+            new_line = m[1] + "ESC_DESCRIPTION:" + "\n"
+            final_content += new_line
+            spaces = m[3].count(" ")
+            spaces -= 1
+            new_line = " " * spaces + m[4] + "\n"
+            final_content += new_line
+            continue
+        final_content += line + "\n"
+    return final_content
 
 def leading_spaces(line):
     """
@@ -272,8 +291,8 @@ def escape_description(content: str) -> str:
     ``` yaml
     description:
         description:
-        - The image policy's description.
-        - Blah blah more details about the image policy's description.
+            - The image policy's description.
+            - Blah blah more details about the image policy's description.
         type: str
         required: false
     ```
@@ -283,7 +302,8 @@ def escape_description(content: str) -> str:
 
     ``` yaml
     ESC_DESCRIPTION:
-        description: An interface description.
+            - The image policy's description.
+            - Blah blah more details about the image policy's description.
         type: str
         required: false
     ```
@@ -338,24 +358,28 @@ def unescape_description(content: str) -> str:
     recurse(d)
     return yaml.dump(d)
 
-# def remove_suboptions(md: str) -> str:
-#     """
-#     # Summary
+def remove_suboptions(md: str) -> str:
+    """
+    # Summary
 
-#     Given markdown content, remove headings containing
-#     the string "suboptions".
-#     """
-#     new_md = ""
-#     for line in md.split("\n"):
-#         if "suboptions" in line:
-#             continue
-#         new_md += line + "\n"
-#     return new_md
+    Given markdown content, remove headings containing
+    the string "suboptions".
+    """
+    new_md = ""
+    for line in md.split("\n"):
+        if "suboptions" in line:
+            continue
+        new_md += line + "\n"
+    return new_md
 
 input_file = sys.argv[1]
+# print(f"ZZZ: input_file: {input_file}")
 content = load_yaml(input_file)
 content = escape_description(content)
+# print(f"ZZZ: content: {content}")
 content = fix_descriptions(content)
+# print(f"ZZZ: content: {content}")
+#exit()
 content = unescape_description(content)
 content = fix_default(content)
 if "dcnm_fabric" in input_file:

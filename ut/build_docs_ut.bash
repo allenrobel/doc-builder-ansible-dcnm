@@ -1,21 +1,17 @@
 export REPO_HOME=$HOME/repos/doc-builder-ansible-dcnm
-export DOCS_DOCUMENTATION_DIR=$REPO_HOME/documentation
-export DOCS_EXAMPLES_DIR=$REPO_HOME/examples
-export DOCS_MAIN_DIR=$REPO_HOME/docs
-export DOCS_RETURN_DIR=$REPO_HOME/return
+export DOCS_EXAMPLES_DIR=$REPO_HOME/ut/examples
+export DOCS_MAIN_DIR=$REPO_HOME/ut/docs
+export DOCS_MODULES_DIR=$REPO_HOME/ut/py
+export DOCS_RETURN_DIR=$REPO_HOME/ut/return
+export DOCS_DOCUMENTATION_DIR=$REPO_HOME/ut/yaml
 
-MODULES="dcnm_fabric "
-MODULES+="dcnm_image_policy dcnm_image_upgrade dcnm_image_upload dcnm_interface "
-MODULES+="dcnm_inventory dcnm_links dcnm_maintenance_mode dcnm_network "
-MODULES+="dcnm_policy dcnm_resource_manager dcnm_rest "
-MODULES+="dcnm_service_node dcnm_service_policy dcnm_service_route_peering "
-MODULES+="dcnm_template dcnm_vpc_pair dcnm_vrf"
+MODULES="dcnm_unit_test"
 
-# pull down the latest documentation for each module from the
-# ansible-dcnm repository
+# --unit-test flag is used to load the unit test documentation
+# from DOCS_MODULES_DIR instead of the ansible-dcnm repository
 for MODULE in $MODULES; do
     echo "Retrieving Module: $MODULE"
-    $REPO_HOME/doc_getter.py --module $MODULE
+    $REPO_HOME/doc_getter.py --module $MODULE --unit-test
 done
 
 # Create file with main DOCUMENATION section for each module

@@ -6,18 +6,18 @@
 This script downloads the latest version of the module from the
 develop branch of the ansible-dcnm repository and extract the
 documentation and examples from the module.  It will then write
-the documentation to the YAML_HOME directory and the examples to
+the documentation to the DOCS_YAML_DIR directory and the examples to
 the EXAMPLES_DIR directory.
 
 ## Requirements
 
 This script MUST be run through the bash script build_docs.bash
-unless the environment variables YAML_HOME and EXAMPLES_DIR are set.
+unless the environment variables DOCS_YAML_DIR and EXAMPLES_DIR are set.
 
 ## Usage
 
 ``` bash
-python doc_getter.py <module_name>
+python doc_getter.py --module <module_name>
 ```
 
 Where <module_name> is the name of the module from which to extract
@@ -26,30 +26,75 @@ the documentation and examples.
 ## Example
 
 ``` bash
-python doc_getter.py dcnm_fabric
+python doc_getter.py --module dcnm_fabric
+```
+
+## Usage for unit tests
+
+If the --unit-test flag is set, the script will read from the
+$REPO_HOME/ut/py directory rather than pulling the module from
+the ansible-dcnm repository.
+
+``` bash
+python doc_getter.py --module dcnm_fabric --unit-test
 ```
 
 ## Environment Variables
 
-- YAML_HOME: The directory where the documentation will be written.
+- DOCS_YAML_DIR: The directory where the documentation will be written.
 - EXAMPLES_HOME: The directory where the examples will be written.
 """
+import argparse
 import copy
 import requests
 from os import environ
 import sys
 
-YAML_DIR = environ.get("YAML_HOME")
-EXAMPLES_DIR = environ.get("EXAMPLES_HOME")
+def setup_parser() -> argparse.Namespace:
+    """
+    ### Summary
 
-if YAML_DIR is None:
-    print("Error: YAML_HOME environment variable not set")
-    exit(1)
-if EXAMPLES_DIR is None:
-    print("Error: EXAMPLES_HOME environment variable not set")
-    exit(1)
+    Setup script-specific parser
 
-def get_module(filename: str) -> str:
+    Returns:
+        argparse.Namespace
+    """
+    help_module = "Name of the module from which to extract documentation. "
+    help_module += "Example: --module dcnm_inventory"
+
+    help_unit_test = "If present, read from the location specified in "
+    help_unit_test += "the environment variable $MODULES_HOME "
+    help_unit_test += "rather than pulling from the repository. "
+    help_unit_test += "Example: --unit-test"
+
+    parser = argparse.ArgumentParser(
+        description="DESCRIPTION: Options for doc_getter.",
+    )
+    mandatory = parser.add_argument_group(title="MANDATORY ARGS")
+    optional = parser.add_argument_group(title="OPTIONAL ARGS")
+
+    mandatory.add_argument(
+        "--module",
+        type=str,
+        required=True,
+        dest="module",
+        help=f"{help_module}",
+    )
+    optional.add_argument(
+        "--unit-test",
+        dest="unit_test",
+        required=False,
+        action='store_true',
+        help=f"{help_unit_test}",
+    )
+    return parser.parse_args()
+
+
+def get_module(filename: str, unit_test: bool) -> str:
+    if unit_test is True:
+        with open(f"{MODULES_DIR}/{filename}", "r") as f:
+            return f.read()
+
     base_url = "https://raw.githubusercontent.com/"
     base_url += "CiscoDevNet/ansible-dcnm/refs/heads/develop/plugins/modules/"
 
@@ -60,7 +105,7 @@ def get_module(filename: str) -> str:
         raise SystemExit(e)
     return response.text
 
-def get_documentation(full_content: str) -> str:
+def get_docs_main(full_content: str) -> str:
     found = False
     content = ""
     for line in full_content.split("\n"):
@@ -74,11 +119,16 @@ def get_documentation(full_content: str) -> str:
             content += line + "\n"
     return content
 
-def get_examples(full_content: str) -> str:
+def get_docs_examples(full_content: str) -> str:
     found = False
     content = ""
     for line in full_content.split("\n"):
         if line == '"""' and found is True:
+            found = False
+            break
+        # special-casing for dcnm_rest.py
+        # TODO: Ask Mike if we can remove noqa from this file
+        if line == '"""  # noqa' and found is True:
             found = False
             break
         if line == 'EXAMPLES = """':
@@ -88,21 +138,66 @@ def get_examples(full_content: str) -> str:
             continue
         if found is True:
             content += line + "\n"
-    content += "```\n"
+    if content != "":
+        content += "```\n"
     return content
 
-if len(sys.argv) != 2:
-    print("Example usage:")
-    print(f"{sys.argv[0]} dcnm_inventory")
-    sys.exit(1)
+def get_docs_return(full_content: str) -> str:
+    found = False
+    content = ""
+    for line in full_content.split("\n"):
+        if line == '"""' and found is True:
+            found = False
+            break
+        if line == 'RETURN = """':
+            found = True
+            content += "``` yaml\n"
+            content += "---\n"
+            continue
+        if found is True:
+            content += line + "\n"
+    if content != "":
+        content += "```\n"
+    return content
 
-module = sys.argv[1]
-module_content = get_module(f"{module}.py")
+EXAMPLES_DIR = environ.get("DOCS_EXAMPLES_DIR")
+MODULES_DIR = environ.get("DOCS_MODULES_DIR")
+RETURN_DIR = environ.get("DOCS_RETURN_DIR")
+YAML_DIR = environ.get("DOCS_YAML_DIR")
 
-documentation = get_documentation(copy.copy(module_content))
+args = setup_parser()
+
+if EXAMPLES_DIR is None:
+    msg = "Error: DOCS_EXAMPLES_DIR environment variable must be set"
+    print(msg)
+    exit(1)
+if MODULES_DIR is None and args.unit_test is True:
+    msg = "Error: DOCS_MODULES_DIR environment variable must be set "
+    msg += "if --unit-test is True"
+    print(msg)
+    exit(1)
+if RETURN_DIR is None:
+    msg = "Error: DOCS_RETURN_DIR environment variable must be set"
+    print(msg)
+    exit(1)
+if YAML_DIR is None:
+    msg = "Error: DOCS_YAML_DIR environment variable must be set"
+    print(msg)
+    exit(1)
+
+module = args.module
+module_content = get_module(f"{module}.py", args.unit_test)
+
+docs_main = get_docs_main(copy.copy(module_content))
 with open(f"{YAML_DIR}/{module}.yaml", "w") as f:
-    f.write(documentation)
+    f.write(docs_main)
 
-examples = get_examples(copy.copy(module_content))
+docs_examples = get_docs_examples(copy.copy(module_content))
 with open(f"{EXAMPLES_DIR}/{module}.yaml", "w") as f:
-    f.write(examples)
+    f.write(docs_examples)
+
+docs_return = get_docs_return(copy.copy(module_content))
+if docs_return != "":
+    print(f"Writing {RETURN_DIR}/{module}.yaml")
+    with open(f"{RETURN_DIR}/{module}.yaml", "w") as f:
+        f.write(docs_return)

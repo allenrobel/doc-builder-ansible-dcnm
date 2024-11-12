@@ -93,9 +93,14 @@
     json_data: "{{ data }}"
     register: result
 
-"""  # noqa
+```
 
-RETURN = """
+## Return
+
+???+ "Details"
+
+``` yaml
+---
 response:
     description:
     - Success or Error Data retrieved from DCNM
